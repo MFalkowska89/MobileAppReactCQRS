@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "solutionreact.client\\solutionreact.client.esproj",
+        "Action": "StartWithoutDebugging"
+      },
+      {
+        "Path": "SolutionReact.Server\\SolutionReact.Server.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
