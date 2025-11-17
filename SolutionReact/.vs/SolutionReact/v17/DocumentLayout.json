@@ -1,7 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\SolutionReact\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0E26A6E1-EA6F-055D-BBC5-188D81808E9A}|solutionreact.client\\solutionreact.client.esproj|c:\\users\\gosia\\desktop\\tmab projekt\\git\\mobileappreactcqrs\\solutionreact\\solutionreact.client\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{0E26A6E1-EA6F-055D-BBC5-188D81808E9A}|solutionreact.client\\solutionreact.client.esproj|solutionrelative:solutionreact.client\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +14,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\solutionreact.client\\.gitignore",
+              "RelativeDocumentMoniker": "solutionreact.client\\.gitignore",
+              "ToolTip": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\solutionreact.client\\.gitignore",
+              "RelativeToolTip": "solutionreact.client\\.gitignore",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAuwHAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-17T20:23:39.989Z",
+              "EditorCaption": ""
             }
           ]
         }
