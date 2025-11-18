@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0E26A6E1-EA6F-055D-BBC5-188D81808E9A}|solutionreact.client\\solutionreact.client.esproj|c:\\users\\gosia\\desktop\\tmab projekt\\git\\mobileappreactcqrs\\solutionreact\\solutionreact.client\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{0E26A6E1-EA6F-055D-BBC5-188D81808E9A}|solutionreact.client\\solutionreact.client.esproj|solutionrelative:solutionreact.client\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+      "AbsoluteMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|c:\\users\\gosia\\desktop\\tmab projekt\\git\\mobileappreactcqrs\\solutionreact\\solutionreact.server\\solutionreact.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|solutionrelative:solutionreact.server\\solutionreact.server.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|c:\\users\\gosia\\desktop\\tmab projekt\\git\\mobileappreactcqrs\\solutionreact\\solutionreact.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|solutionrelative:solutionreact.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,14 +27,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": ".gitignore",
-              "DocumentMoniker": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\solutionreact.client\\.gitignore",
-              "RelativeDocumentMoniker": "solutionreact.client\\.gitignore",
-              "ToolTip": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\solutionreact.client\\.gitignore",
-              "RelativeToolTip": "solutionreact.client\\.gitignore",
-              "ViewState": "AgIAAFwAAAAAAAAAAAAuwHAAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-11-17T20:23:39.989Z",
+              "Title": "SolutionReact.Server",
+              "DocumentMoniker": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\SolutionReact.Server.csproj",
+              "RelativeDocumentMoniker": "SolutionReact.Server\\SolutionReact.Server.csproj",
+              "ToolTip": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\SolutionReact.Server.csproj*",
+              "RelativeToolTip": "SolutionReact.Server\\SolutionReact.Server.csproj*",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-18T18:10:49.626Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Program.cs",
+              "RelativeDocumentMoniker": "SolutionReact.Server\\Program.cs",
+              "ToolTip": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Program.cs",
+              "RelativeToolTip": "SolutionReact.Server\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-18T18:02:53.064Z",
               "EditorCaption": ""
             }
           ]
