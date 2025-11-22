@@ -6,8 +6,6 @@
         public int TourId { get; set; }
         public Nullable<int> GuideId { get; set; }
         public Nullable<int> HotelId { get; set; }
-        public Nullable<int> FlightDepartureId { get; set; }
-        public Nullable<int> FlightReturnId { get; set; }
         public System.DateTime TourStartDate { get; set; }
         public bool IsActive { get; set; }
         public string AddedBy { get; set; } = string.Empty;

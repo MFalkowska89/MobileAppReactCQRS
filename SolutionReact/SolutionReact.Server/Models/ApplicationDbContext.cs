@@ -30,6 +30,9 @@ namespace SolutionReact.Server.Models
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
+                entity.Property(e => e.ActivityName).HasMaxLength(50);
+                entity.Property(e => e.FitnessLevel).HasMaxLength(20);
+
                 entity.HasMany(a => a.TourActivities)
                       .WithOne(ta => ta.Activity)
                       .HasForeignKey(ta => ta.ActivityId);
@@ -39,6 +42,9 @@ namespace SolutionReact.Server.Models
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.BookingStatus).HasMaxLength(20);
+                entity.Property(e => e.TotalPrice).HasColumnType("decimal(10,2)");
 
                 entity.HasOne(b => b.Customer)
                       .WithMany(c => c.Bookings)
@@ -77,6 +83,16 @@ namespace SolutionReact.Server.Models
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+                entity.Property(e => e.LastName).HasMaxLength(100);
+                entity.Property(e => e.HomeAddress).HasMaxLength(250);
+                entity.Property(e => e.PostCode).HasMaxLength(20);
+                entity.Property(e => e.Country).HasMaxLength(50);
+                entity.Property(e => e.City).HasMaxLength(100);
+                entity.Property(e => e.PhoneNumber).HasMaxLength(30);
+                entity.Property(e => e.PhoneNumberExtra).HasMaxLength(30);
+                entity.Property(e => e.EmailAddress).HasMaxLength(250);
+
                 entity.HasMany(c => c.Bookings)
                       .WithOne(b => b.Customer)
                       .HasForeignKey(b => b.CustomerId);
@@ -91,6 +107,11 @@ namespace SolutionReact.Server.Models
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
+                entity.Property(e => e.Country).HasMaxLength(50);
+                entity.Property(e => e.City).HasMaxLength(100);
+                entity.Property(e => e.Region).HasMaxLength(100);
+                entity.Property(e => e.TimeZone).HasMaxLength(10);
+
                 entity.HasMany(d => d.Tours)
                       .WithOne(t => t.Destination)
                       .HasForeignKey(t => t.DestinationId);
@@ -100,6 +121,16 @@ namespace SolutionReact.Server.Models
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.FirstName).HasMaxLength(50);
+                entity.Property(e => e.LastName).HasMaxLength(100);
+                entity.Property(e => e.HomeAddress).HasMaxLength(250);
+                entity.Property(e => e.PostCode).HasMaxLength(20);
+                entity.Property(e => e.Country).HasMaxLength(50);
+                entity.Property(e => e.City).HasMaxLength(100);
+                entity.Property(e => e.PhoneNumber).HasMaxLength(30);
+                entity.Property(e => e.PhoneNumberExtra).HasMaxLength(30);
+                entity.Property(e => e.EmailAddress).HasMaxLength(250);
 
                 entity.HasMany(g => g.TourSchedules)
                       .WithOne(ts => ts.Guide)
@@ -111,6 +142,15 @@ namespace SolutionReact.Server.Models
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
+                entity.Property(e => e.Name).HasMaxLength(100);
+                entity.Property(e => e.Address).HasMaxLength(250);
+                entity.Property(e => e.PostCode).HasMaxLength(20);
+                entity.Property(e => e.Country).HasMaxLength(50);
+                entity.Property(e => e.City).HasMaxLength(100);
+                entity.Property(e => e.PhoneNumber).HasMaxLength(30);
+                entity.Property(e => e.EMailAddress).HasMaxLength(250);
+                entity.Property(e => e.HotelType).HasMaxLength(20);
+
                 entity.HasMany(h => h.TourSchedules)
                       .WithOne(ts => ts.Hotel)
                       .HasForeignKey(ts => ts.HotelId);
@@ -121,6 +161,11 @@ namespace SolutionReact.Server.Models
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
+                entity.Property(e => e.AmountInvoice).HasColumnType("decimal(10,2)");
+                entity.Property(e => e.AmountPaid).HasColumnType("decimal(10,2)");
+                entity.Property(e => e.PaymentMethod).HasMaxLength(20);
+                entity.Property(e => e.TransactionReference).HasMaxLength(100);
+
                 entity.HasOne(p => p.Booking)
                       .WithMany(b => b.Payments)
                       .HasForeignKey(p => p.BookingId);
@@ -130,6 +175,10 @@ namespace SolutionReact.Server.Models
             {
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Price).HasColumnType("decimal(10,2)");
+                entity.Property(e => e.TourType).HasMaxLength(20);
+                entity.Property(e => e.TourCode).HasMaxLength(20);
 
                 entity.HasOne(t => t.Destination)
                       .WithMany(d => d.Tours)
@@ -163,6 +212,8 @@ namespace SolutionReact.Server.Models
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
+                entity.Property(e => e.TourStatus).HasMaxLength(20);
+
                 entity.HasOne(ts => ts.Tour)
                       .WithMany(t => t.TourSchedules)
                       .HasForeignKey(ts => ts.TourId);
@@ -174,7 +225,6 @@ namespace SolutionReact.Server.Models
                 entity.HasOne(ts => ts.Hotel)
                       .WithMany(h => h.TourSchedules)
                       .HasForeignKey(ts => ts.HotelId);
-
             });
 
 
@@ -231,7 +281,7 @@ namespace SolutionReact.Server.Models
 
             // Seed TourSchedule data
             modelBuilder.Entity<TourSchedule>().HasData(
-                new TourSchedule { Id = 1, TourId = 1, GuideId = 1, HotelId = 1, FlightDepartureId = 1, FlightReturnId = 1, TourStartDate = DateTime.Now.AddDays(5), IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
+                new TourSchedule { Id = 1, TourId = 1, GuideId = 1, HotelId = 1, TourStartDate = DateTime.Now.AddDays(5), IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
             );
 
         }
