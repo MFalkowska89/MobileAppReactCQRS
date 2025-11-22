@@ -9,11 +9,11 @@ namespace SolutionReact.Server.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ItemsController : ControllerBase
+    public class ActivityController : ControllerBase
     {
         private readonly IMediator _mediator;
 
-        public ItemsController(IMediator mediator)
+        public ActivityController(IMediator mediator)
         {
             _mediator = mediator;
         }

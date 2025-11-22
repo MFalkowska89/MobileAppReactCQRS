@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Mapster;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SolutionReact.Server.Dto;
 using SolutionReact.Server.Models;
@@ -17,25 +18,9 @@ namespace SolutionReact.Server.Handlers.Activities
         public async Task<List<ActivityDto>> Handle(GetAllActivitiesQuery request, CancellationToken cancellationToken)
         {
             var activities = await _context.Activities
+                .AsNoTracking()
                 .Where(a => a.IsActive)
-                .Select(a => new ActivityDto
-                {
-                    Id = a.Id,
-                    Description = a.Description,
-                    IsActive = a.IsActive,
-                    AddedBy = a.AddedBy,
-                    AddedDate = a.AddedDate,
-                    ModifiedBy = a.ModifiedBy,
-                    ModifiedDate = a.ModifiedDate,
-                    DeletedBy = a.DeletedBy,
-                    DeletedDate = a.DeletedDate,
-                    Comments = a.Comments,
-                    ActivityName = a.ActivityName,
-                    MinimumAge = a.MinimumAge,
-                    MaximumAge = a.MaximumAge,
-                    FitnessLevel = a.FitnessLevel,
-                    DurationInMinutes = a.DurationInMinutes
-                })
+                .Select(a => a.Adapt<ActivityDto>())
                 .ToListAsync(cancellationToken);
 
             return activities;

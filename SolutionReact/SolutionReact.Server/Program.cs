@@ -1,5 +1,6 @@
-
+using Mapster;
 using Microsoft.EntityFrameworkCore;
+using SolutionReact.Server.Mappings;
 using SolutionReact.Server.Models;
 using System.Reflection;
 
@@ -18,6 +19,9 @@ namespace SolutionReact.Server
             // DbContext
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Mapster config
+            ActivityMappingConfig.Configure();
 
             // MediatR
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
