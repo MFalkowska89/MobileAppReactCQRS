@@ -1,102 +1,38 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolutionReact.Server.Models;
+using SolutionReact.Server.Requests.Activities.Commands;
+using SolutionReact.Server.Requests.Activities.Queries;
 
 namespace SolutionReact.Server.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class ActivityController : ControllerBase
+    [Route("api/[controller]")]
+    public class ItemsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMediator _mediator;
 
-        public ActivityController(ApplicationDbContext context)
+        public ItemsController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
 
-        // GET: api/Activity
+        // GET: api/items
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Activity>>> GetActivities()
+        public async Task<IActionResult> GetAll()
         {
-            return await _context.Activities.ToListAsync();
+            var query = new GetAllActivitiesQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
-        // GET: api/Activity/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Activity>> GetActivity(int id)
-        {
-            var activity = await _context.Activities.FindAsync(id);
-
-            if (activity == null)
-            {
-                return NotFound();
-            }
-
-            return activity;
-        }
-
-        // PUT: api/Activity/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutActivity(int id, Activity activity)
-        {
-            if (id != activity.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(activity).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ActivityExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Activity
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/items
         [HttpPost]
-        public async Task<ActionResult<Activity>> PostActivity(Activity activity)
+        public async Task<IActionResult> Create([FromBody] CreateActivityCommand command)
         {
-            _context.Activities.Add(activity);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetActivity", new { id = activity.Id }, activity);
-        }
-
-        // DELETE: api/Activity/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActivity(int id)
-        {
-            var activity = await _context.Activities.FindAsync(id);
-            if (activity == null)
-            {
-                return NotFound();
-            }
-
-            _context.Activities.Remove(activity);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool ActivityExists(int id)
-        {
-            return _context.Activities.Any(e => e.Id == id);
+            var itemId = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetAll), new { id = itemId }, itemId);
         }
     }
 }
