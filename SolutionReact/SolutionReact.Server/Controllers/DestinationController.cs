@@ -1,107 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolutionReact.Server.Models;
+using SolutionReact.Server.Requests.Activities.Commands;
+using SolutionReact.Server.Requests.Activities.Queries;
+using SolutionReact.Server.Requests.Destinations.Commands;
+using SolutionReact.Server.Requests.Destinations.Queries;
 
 namespace SolutionReact.Server.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class DestinationController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IMediator _mediator;
 
-        public DestinationController(ApplicationDbContext context)
+        public DestinationController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
 
-        // GET: api/Destination
+        // GET: api/items
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Destination>>> GetDestination()
+        public async Task<IActionResult> GetAll()
         {
-            return await _context.Destination.ToListAsync();
+            var query = new GetAllDestinationsQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
-        // GET: api/Destination/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Destination>> GetDestination(int id)
-        {
-            var destination = await _context.Destination.FindAsync(id);
-
-            if (destination == null)
-            {
-                return NotFound();
-            }
-
-            return destination;
-        }
-
-        // PUT: api/Destination/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutDestination(int id, Destination destination)
-        {
-            if (id != destination.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(destination).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!DestinationExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Destination
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/items
         [HttpPost]
-        public async Task<ActionResult<Destination>> PostDestination(Destination destination)
+        public async Task<IActionResult> Create([FromBody] CreateDestinationCommand command)
         {
-            _context.Destination.Add(destination);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetDestination", new { id = destination.Id }, destination);
-        }
-
-        // DELETE: api/Destination/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteDestination(int id)
-        {
-            var destination = await _context.Destination.FindAsync(id);
-            if (destination == null)
-            {
-                return NotFound();
-            }
-
-            _context.Destination.Remove(destination);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool DestinationExists(int id)
-        {
-            return _context.Destination.Any(e => e.Id == id);
+            var itemId = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetAll), new { id = itemId }, itemId);
         }
     }
 }
