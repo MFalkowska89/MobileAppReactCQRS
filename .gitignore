@@ -117,3 +117,6 @@ appsettings.*.json
 # End of .gitignore
 /SolutionReact/.vs/SolutionReact/v17/.suo
 /SolutionReact/.vs/SolutionReact/v17/DocumentLayout.backup.json
+/SolutionReact/.vs/SolutionReact/DesignTimeBuild/.dtbcache.v2
+/SolutionReact/.vs/SolutionReact/v17/.futdcache.v2
+/SolutionReact/.vs/SolutionReact/v17/DocumentLayout.json
