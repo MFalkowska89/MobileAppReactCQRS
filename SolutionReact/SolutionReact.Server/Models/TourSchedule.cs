@@ -4,7 +4,6 @@
     {
         public int Id { get; set; }
         public int TourId { get; set; }
-        public Nullable<int> GuideId { get; set; }
         public Nullable<int> HotelId { get; set; }
         public System.DateTime TourStartDate { get; set; }
         public bool IsActive { get; set; }
@@ -19,7 +18,6 @@
         public int AvailablePax { get; set; }
 
         public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
-        public virtual Guide Guide { get; set; } = null!;
         public virtual Hotel Hotel { get; set; } = null!;
         public virtual Tour Tour { get; set; } = null!;
 

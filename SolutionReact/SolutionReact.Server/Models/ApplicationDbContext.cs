@@ -14,7 +14,6 @@ namespace SolutionReact.Server.Models
         public DbSet<BookingParticipant> BookingsParticipant { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Destination> Destination { get; set; }
-        public DbSet<Guide> Guides { get; set; }
         public DbSet<Hotel> Hotel { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Tour> Tours { get; set; }
@@ -117,26 +116,6 @@ namespace SolutionReact.Server.Models
                       .HasForeignKey(t => t.DestinationId);
             });
 
-            modelBuilder.Entity<Guide>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.FirstName).HasMaxLength(50);
-                entity.Property(e => e.LastName).HasMaxLength(100);
-                entity.Property(e => e.HomeAddress).HasMaxLength(250);
-                entity.Property(e => e.PostCode).HasMaxLength(20);
-                entity.Property(e => e.Country).HasMaxLength(50);
-                entity.Property(e => e.City).HasMaxLength(100);
-                entity.Property(e => e.PhoneNumber).HasMaxLength(30);
-                entity.Property(e => e.PhoneNumberExtra).HasMaxLength(30);
-                entity.Property(e => e.EmailAddress).HasMaxLength(250);
-
-                entity.HasMany(g => g.TourSchedules)
-                      .WithOne(ts => ts.Guide)
-                      .HasForeignKey(ts => ts.GuideId);
-            });
-
             modelBuilder.Entity<Hotel>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -218,10 +197,6 @@ namespace SolutionReact.Server.Models
                       .WithMany(t => t.TourSchedules)
                       .HasForeignKey(ts => ts.TourId);
 
-                entity.HasOne(ts => ts.Guide)
-                      .WithMany(g => g.TourSchedules)
-                      .HasForeignKey(ts => ts.GuideId);
-
                 entity.HasOne(ts => ts.Hotel)
                       .WithMany(h => h.TourSchedules)
                       .HasForeignKey(ts => ts.HotelId);
@@ -250,12 +225,6 @@ namespace SolutionReact.Server.Models
                 new Activity { Id = 2, ActivityName = "Hiking", Description = "Mountain trek", FitnessLevel = "High", DurationInMinutes = 180, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
             );
 
-            // Seed Guide data
-            modelBuilder.Entity<Guide>().HasData(
-                new Guide { Id = 1, FirstName = "John", LastName = "Doe", DateOfBirth = new DateTime(1980, 5, 15), PhoneNumber = "123-456-7890", EmailAddress = "john.doe@example.com", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now, HiredFrom = DateTime.Now },
-                new Guide { Id = 2, FirstName = "Jane", LastName = "Smith", DateOfBirth = new DateTime(1985, 3, 25), PhoneNumber = "987-654-3210", EmailAddress = "jane.smith@example.com", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now, HiredFrom = DateTime.Now }
-            );
-
             // Seed Hotel data
             modelBuilder.Entity<Hotel>().HasData(
                 new Hotel { Id = 1, Name = "Hotel Paris", Address = "123 Champs-Elysees", PostCode = "75008", City = "Paris", Country = "France", IsActive = true, PhoneNumber = "123-456-7890", EMailAddress = "contact@hotelparis.com", CheckInTime = new TimeSpan(14, 0, 0), CheckOutTime = new TimeSpan(11, 0, 0), HotelType = "Luxury", AddedBy = "Admin", AddedDate = DateTime.Now },
@@ -281,7 +250,7 @@ namespace SolutionReact.Server.Models
 
             // Seed TourSchedule data
             modelBuilder.Entity<TourSchedule>().HasData(
-                new TourSchedule { Id = 1, TourId = 1, GuideId = 1, HotelId = 1, TourStartDate = DateTime.Now.AddDays(5), IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
+                new TourSchedule { Id = 1, TourId = 1, HotelId = 1, TourStartDate = DateTime.Now.AddDays(5), IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
             );
 
         }
