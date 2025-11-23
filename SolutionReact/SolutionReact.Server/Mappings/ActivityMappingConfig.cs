@@ -18,7 +18,6 @@ namespace SolutionReact.Server.Mappings
                 .Map(d => d.ActivityName, s => s.ActivityName)
                 .Map(d => d.MinimumAge, s => s.MinimumAge)
                 .Map(d => d.MaximumAge, s => s.MaximumAge)
-                .Map(d => d.FitnessLevel, s => s.FitnessLevel)
                 .Map(d => d.DurationInMinutes, s => s.DurationInMinutes);
 
             // to dodajemy do back - create activity command - request z frontu, activity - model bazy danych
@@ -29,7 +28,6 @@ namespace SolutionReact.Server.Mappings
                 .Map(d => d.ActivityName, s => s.ActivityName)
                 .Map(d => d.MinimumAge, s => s.MinimumAge)
                 .Map(d => d.MaximumAge, s => s.MaximumAge)
-                .Map(d => d.FitnessLevel, s => s.FitnessLevel)
                 .Map(d => d.DurationInMinutes, s => s.DurationInMinutes)
                 .Map(d => d.IsActive, _ => true);
         }

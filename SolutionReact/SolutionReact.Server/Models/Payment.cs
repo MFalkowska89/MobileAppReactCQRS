@@ -8,7 +8,7 @@
         public decimal AmountInvoice { get; set; }
         public Nullable<System.DateTime> DatePayment { get; set; }
         public Nullable<decimal> AmountPaid { get; set; }
-        public string? PaymentMethod { get; set; }
+        public int PaymentMethodId { get; set; }
         public string? TransactionReference { get; set; }
         public bool IsActive { get; set; }
         public string AddedBy { get; set; } = string.Empty;
@@ -20,6 +20,8 @@
         public string? Comments { get; set; }
 
         public virtual Booking Booking { get; set; } = null!;
+
+        public virtual PaymentMethod PaymentMethod { get; set; } = null!;
 
     }
 }

@@ -16,7 +16,6 @@
         public string? DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public string? Comments { get; set; }
-        public string TourType { get; set; } = string.Empty;
         public string TourCode { get; set; } = string.Empty;
 
         public virtual Destination Destination { get; set; } = null!;

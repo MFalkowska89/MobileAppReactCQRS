@@ -1,9 +1,10 @@
 ﻿namespace SolutionReact.Server.Models
 {
-    public class Activity
+    public class PaymentMethod
     {
         public int Id { get; set; }
-        public string Description { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string? Description { get; set; }
         public bool IsActive { get; set; }
         public string AddedBy { get; set; } = string.Empty;
         public System.DateTime AddedDate { get; set; }
@@ -12,12 +13,7 @@
         public string? DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public string? Comments { get; set; }
-        public string ActivityName { get; set; } = string.Empty;
-        public Nullable<int> MinimumAge { get; set; }
-        public Nullable<int> MaximumAge { get; set; }
-        public string AdditionalRequirements { get; set; }= string.Empty;
-        public int DurationInMinutes { get; set; }
 
-        public virtual ICollection<TourActivity> TourActivities { get; set; } = new List<TourActivity>();
+        public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }

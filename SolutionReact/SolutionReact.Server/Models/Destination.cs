@@ -14,7 +14,6 @@
         public string? DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public string? Comments { get; set; }
-        public string? TimeZone { get; set; }
 
         public virtual ICollection<Tour> Tours { get; set; } = new List<Tour>();
     }

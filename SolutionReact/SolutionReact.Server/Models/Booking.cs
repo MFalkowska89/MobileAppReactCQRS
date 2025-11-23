@@ -7,7 +7,7 @@
         public int CustomTourScheduleId { get; set; }
         public int NoPax { get; set; }
         public decimal TotalPrice { get; set; }
-        public string BookingStatus { get; set; } = string.Empty;
+        public int BookingStatusId { get; set; }
         public System.DateTime BookingDate { get; set; }
         public bool IsActive { get; set; }
         public string AddedBy { get; set; } = string.Empty;
@@ -20,6 +20,7 @@
 
         public virtual Customer Customer { get; set; } = null!;
         public virtual TourSchedule TourSchedule { get; set; } = null!;
+        public virtual StatusOfEntity StatusOfEntity { get; set; } = null!;
         public virtual ICollection<BookingParticipant> BookingParticipants { get; set; } = new List<BookingParticipant>();
         public virtual ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 
 namespace SolutionReact.Server.Models
 {
@@ -14,11 +15,12 @@ namespace SolutionReact.Server.Models
         public DbSet<BookingParticipant> BookingsParticipant { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Destination> Destination { get; set; }
-        public DbSet<Hotel> Hotel { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Tour> Tours { get; set; }
         public DbSet<TourActivity> TourActivities { get; set; }
         public DbSet<TourSchedule> ToursSchedule { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<StatusOfEntity> StatusOfEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,7 +32,6 @@ namespace SolutionReact.Server.Models
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.ActivityName).HasMaxLength(50);
-                entity.Property(e => e.FitnessLevel).HasMaxLength(20);
 
                 entity.HasMany(a => a.TourActivities)
                       .WithOne(ta => ta.Activity)
@@ -42,24 +43,31 @@ namespace SolutionReact.Server.Models
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.BookingStatus).HasMaxLength(20);
                 entity.Property(e => e.TotalPrice).HasColumnType("decimal(10,2)");
 
                 entity.HasOne(b => b.Customer)
                       .WithMany(c => c.Bookings)
-                      .HasForeignKey(b => b.CustomerId);
+                      .HasForeignKey(b => b.CustomerId)
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(b => b.TourSchedule)
                       .WithMany(ts => ts.Bookings)
-                      .HasForeignKey(b => b.CustomTourScheduleId);
+                      .HasForeignKey(b => b.CustomTourScheduleId)
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasMany(b => b.BookingParticipants)
                       .WithOne(bp => bp.Booking)
                       .HasForeignKey(bp => bp.BookingId);
 
+                entity.HasOne(b => b.StatusOfEntity)       // navigation property in Booking
+                        .WithMany(s => s.Bookings)          // collection in StatusOfEntity
+                        .HasForeignKey(b => b.BookingStatusId) // FK property in Booking
+                        .OnDelete(DeleteBehavior.Restrict);
+
                 entity.HasMany(b => b.Payments)
                       .WithOne(p => p.Booking)
                       .HasForeignKey(p => p.BookingId);
+
             });
 
             modelBuilder.Entity<BookingParticipant>(entity =>
@@ -71,10 +79,11 @@ namespace SolutionReact.Server.Models
                       .WithMany(b => b.BookingParticipants)
                       .HasForeignKey(bp => bp.BookingId);
 
+
                 entity.HasOne(bp => bp.Customer)
                       .WithMany(c => c.BookingParticipants)
-                      .HasForeignKey(bp => bp.CustomerId)
-                      .OnDelete(DeleteBehavior.Restrict); ;
+                      .HasForeignKey(bp => bp.CustomerId);
+
             });
 
             modelBuilder.Entity<Customer>(entity =>
@@ -96,9 +105,11 @@ namespace SolutionReact.Server.Models
                       .WithOne(b => b.Customer)
                       .HasForeignKey(b => b.CustomerId);
 
+
                 entity.HasMany(c => c.BookingParticipants)
                       .WithOne(bp => bp.Customer)
                       .HasForeignKey(bp => bp.CustomerId);
+
             });
 
             modelBuilder.Entity<Destination>(entity =>
@@ -109,30 +120,11 @@ namespace SolutionReact.Server.Models
                 entity.Property(e => e.Country).HasMaxLength(50);
                 entity.Property(e => e.City).HasMaxLength(100);
                 entity.Property(e => e.Region).HasMaxLength(100);
-                entity.Property(e => e.TimeZone).HasMaxLength(10);
 
                 entity.HasMany(d => d.Tours)
                       .WithOne(t => t.Destination)
                       .HasForeignKey(t => t.DestinationId);
-            });
 
-            modelBuilder.Entity<Hotel>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.Name).HasMaxLength(100);
-                entity.Property(e => e.Address).HasMaxLength(250);
-                entity.Property(e => e.PostCode).HasMaxLength(20);
-                entity.Property(e => e.Country).HasMaxLength(50);
-                entity.Property(e => e.City).HasMaxLength(100);
-                entity.Property(e => e.PhoneNumber).HasMaxLength(30);
-                entity.Property(e => e.EMailAddress).HasMaxLength(250);
-                entity.Property(e => e.HotelType).HasMaxLength(20);
-
-                entity.HasMany(h => h.TourSchedules)
-                      .WithOne(ts => ts.Hotel)
-                      .HasForeignKey(ts => ts.HotelId);
             });
 
             modelBuilder.Entity<Payment>(entity =>
@@ -142,12 +134,12 @@ namespace SolutionReact.Server.Models
 
                 entity.Property(e => e.AmountInvoice).HasColumnType("decimal(10,2)");
                 entity.Property(e => e.AmountPaid).HasColumnType("decimal(10,2)");
-                entity.Property(e => e.PaymentMethod).HasMaxLength(20);
                 entity.Property(e => e.TransactionReference).HasMaxLength(100);
 
                 entity.HasOne(p => p.Booking)
                       .WithMany(b => b.Payments)
                       .HasForeignKey(p => p.BookingId);
+
             });
 
             modelBuilder.Entity<Tour>(entity =>
@@ -156,20 +148,22 @@ namespace SolutionReact.Server.Models
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.Price).HasColumnType("decimal(10,2)");
-                entity.Property(e => e.TourType).HasMaxLength(20);
                 entity.Property(e => e.TourCode).HasMaxLength(20);
 
                 entity.HasOne(t => t.Destination)
                       .WithMany(d => d.Tours)
-                      .HasForeignKey(t => t.DestinationId);
+                      .HasForeignKey(t => t.DestinationId)
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasMany(t => t.TourActivities)
                       .WithOne(ta => ta.Tour)
                       .HasForeignKey(ta => ta.TourId);
 
+
                 entity.HasMany(t => t.TourSchedules)
                       .WithOne(ts => ts.Tour)
                       .HasForeignKey(ts => ts.TourId);
+
             });
 
             modelBuilder.Entity<TourActivity>(entity =>
@@ -179,11 +173,13 @@ namespace SolutionReact.Server.Models
 
                 entity.HasOne(ta => ta.Tour)
                       .WithMany(t => t.TourActivities)
-                      .HasForeignKey(ta => ta.TourId);
+                      .HasForeignKey(ta => ta.TourId)
+                      .OnDelete(DeleteBehavior.Restrict);
 
                 entity.HasOne(ta => ta.Activity)
                       .WithMany(a => a.TourActivities)
-                      .HasForeignKey(ta => ta.ActivityId);
+                      .HasForeignKey(ta => ta.ActivityId)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<TourSchedule>(entity =>
@@ -191,15 +187,57 @@ namespace SolutionReact.Server.Models
                 entity.HasKey(e => e.Id);
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-                entity.Property(e => e.TourStatus).HasMaxLength(20);
-
                 entity.HasOne(ts => ts.Tour)
                       .WithMany(t => t.TourSchedules)
-                      .HasForeignKey(ts => ts.TourId);
+                      .HasForeignKey(ts => ts.TourId)
+                      .OnDelete(DeleteBehavior.Restrict);
 
-                entity.HasOne(ts => ts.Hotel)
-                      .WithMany(h => h.TourSchedules)
-                      .HasForeignKey(ts => ts.HotelId);
+                entity.HasOne(b => b.StatusOfEntity)       // navigation property in Booking
+                       .WithMany(s => s.TourSchedules)          // collection in StatusOfEntity
+                       .HasForeignKey(b => b.TourStatusId) // FK property in Booking
+                       .OnDelete(DeleteBehavior.Restrict);
+
+            });
+
+            modelBuilder.Entity<PaymentMethod>(entity =>
+            {
+                // Primary Key
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                // Properties
+                entity.Property(e => e.Name)
+                      .IsRequired()
+                      .HasMaxLength(20); // Adjust max length as needed
+
+                // Relationships
+                entity.HasMany(pm => pm.Payments)
+                      .WithOne(p => p.PaymentMethod)
+                      .HasForeignKey(p => p.PaymentMethodId);
+
+            });
+
+            modelBuilder.Entity<StatusOfEntity>(entity =>
+            {
+                // Primary Key
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                // Properties
+                entity.Property(e => e.StatusName)
+                      .IsRequired()
+                      .HasMaxLength(20);
+
+                // Relationships
+                entity.HasMany(s => s.Bookings)
+                      .WithOne(b => b.StatusOfEntity)
+                      .HasForeignKey(b => b.BookingStatusId);
+
+
+                entity.HasMany(s => s.TourSchedules)
+                      .WithOne(ts => ts.StatusOfEntity)
+                      .HasForeignKey(ts => ts.TourStatusId);
+
             });
 
 
@@ -208,49 +246,74 @@ namespace SolutionReact.Server.Models
 
         private void SeedData(ModelBuilder modelBuilder)
         {
+            // Payment methods
+            modelBuilder.Entity<PaymentMethod>().HasData(
+                new PaymentMethod { Id = 1, Name = "Credit Card", Description = "Payment via major credit cards", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now },
+                new PaymentMethod { Id = 2, Name = "PayPal", Description = "Payment via PayPal account", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now },
+                new PaymentMethod { Id = 3, Name = "Bank Transfer", Description = "Direct bank transfer", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now },
+                new PaymentMethod { Id = 4, Name = "Cash", Description = "Cash payment at counter", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now }
+            );
+
+            // Entity statuses (for bookings / tour schedules)
+            modelBuilder.Entity<StatusOfEntity>().HasData(
+                new StatusOfEntity { Id = 1, StatusName = "Pending", StatusDescription = "Pending confirmation", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now },
+                new StatusOfEntity { Id = 2, StatusName = "Confirmed", StatusDescription = "Confirmed", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now },
+                new StatusOfEntity { Id = 3, StatusName = "Cancelled", StatusDescription = "Cancelled", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now },
+                new StatusOfEntity { Id = 4, StatusName = "Completed", StatusDescription = "Completed", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now }
+            );
+
+            // Destinations
             modelBuilder.Entity<Destination>().HasData(
-            new Destination { Id = 1, Country = "France", Region = "Ile-de-France", City = "Paris", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now },
-            new Destination { Id = 2, Country = "Italy", Region = "Tuscany", City = "Florence", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
+                new Destination { Id = 1, Country = "France", Region = "Ile-de-France", City = "Paris", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now },
+                new Destination { Id = 2, Country = "Italy", Region = "Tuscany", City = "Florence", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
             );
 
-            // Seed Tour data
+            // Tours
             modelBuilder.Entity<Tour>().HasData(
-                new Tour { Id = 1, DestinationId = 1, LengthInDays = 7, Price = 1500, MaxParticipants = 20, IsActive = true, TourType = "Adventure", TourCode = "ADV-001", AddedBy = "Admin", AddedDate = DateTime.Now },
-                new Tour { Id = 2, DestinationId = 2, LengthInDays = 5, Price = 1200, MaxParticipants = 15, IsActive = true, TourType = "Cultural", TourCode = "CUL-001", AddedBy = "Admin", AddedDate = DateTime.Now }
+                new Tour { Id = 1, DestinationId = 1, LengthInDays = 7, Price = 1500m, MaxParticipants = 20, IsActive = true, TourCode = "ADV-001", AddedBy = "Admin", AddedDate = DateTime.Now },
+                new Tour { Id = 2, DestinationId = 2, LengthInDays = 5, Price = 1200m, MaxParticipants = 15, IsActive = true, TourCode = "CUL-001", AddedBy = "Admin", AddedDate = DateTime.Now }
             );
 
-            // Seed Activity data
+            // Activities
             modelBuilder.Entity<Activity>().HasData(
-                new Activity { Id = 1, ActivityName = "Sightseeing", Description = "Visit famous landmarks", FitnessLevel = "Low", DurationInMinutes = 120, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now },
-                new Activity { Id = 2, ActivityName = "Hiking", Description = "Mountain trek", FitnessLevel = "High", DurationInMinutes = 180, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
+                new Activity { Id = 1, ActivityName = "Sightseeing", Description = "Visit famous landmarks", AdditionalRequirements = "Swimming Certificate", DurationInMinutes = 120, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now },
+                new Activity { Id = 2, ActivityName = "Hiking", Description = "Mountain trek", AdditionalRequirements = "None", DurationInMinutes = 180, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
             );
 
-            // Seed Hotel data
-            modelBuilder.Entity<Hotel>().HasData(
-                new Hotel { Id = 1, Name = "Hotel Paris", Address = "123 Champs-Elysees", PostCode = "75008", City = "Paris", Country = "France", IsActive = true, PhoneNumber = "123-456-7890", EMailAddress = "contact@hotelparis.com", CheckInTime = new TimeSpan(14, 0, 0), CheckOutTime = new TimeSpan(11, 0, 0), HotelType = "Luxury", AddedBy = "Admin", AddedDate = DateTime.Now },
-                new Hotel { Id = 2, Name = "Florence Inn", Address = "456 Via Firenze", PostCode = "50123", City = "Florence", Country = "Italy", IsActive = true, PhoneNumber = "987-654-3210", EMailAddress = "info@florenceinn.com", CheckInTime = new TimeSpan(15, 0, 0), CheckOutTime = new TimeSpan(10, 0, 0), HotelType = "Boutique", AddedBy = "Admin", AddedDate = DateTime.Now }
+            // TourSchedules (referencing Tour and StatusOfEntity)
+            modelBuilder.Entity<TourSchedule>().HasData(
+                new TourSchedule { Id = 1, TourId = 1, TourStartDate = DateTime.Now.AddDays(10), IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now, TourStatusId = 2 },
+                new TourSchedule { Id = 2, TourId = 2, TourStartDate = DateTime.Now.AddDays(20), IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now, TourStatusId = 1 }
             );
 
-
-            // Seed Payment data
-            modelBuilder.Entity<Payment>().HasData(
-                new Payment { Id = 1, BookingId = 1, DateInvoice = DateTime.Now, AmountInvoice = 1500, DatePayment = DateTime.Now, AmountPaid = 1500, PaymentMethod = "Credit Card", TransactionReference = "TX12345", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
-            );
-
-            // Seed Customer data
+            // Customers
             modelBuilder.Entity<Customer>().HasData(
                 new Customer { Id = 1, FirstName = "Alice", LastName = "Johnson", DateOfBirth = new DateTime(1990, 7, 20), HomeAddress = "789 Elm St", PostCode = "12345", City = "Paris", Country = "France", PhoneNumber = "555-1234", EmailAddress = "alice.johnson@example.com", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now },
                 new Customer { Id = 2, FirstName = "Bob", LastName = "Williams", DateOfBirth = new DateTime(1988, 11, 15), HomeAddress = "456 Oak Ave", PostCode = "67890", City = "Florence", Country = "Italy", PhoneNumber = "555-5678", EmailAddress = "bob.williams@example.com", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
             );
 
-            // Seed Booking data
+            // Bookings (referencing Customer, TourSchedule and StatusOfEntity)
             modelBuilder.Entity<Booking>().HasData(
-                new Booking { Id = 1, CustomerId = 1, CustomTourScheduleId = 1, NoPax = 2, TotalPrice = 3000, BookingStatus = "Confirmed", BookingDate = DateTime.Now, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
+                new Booking { Id = 1, CustomerId = 1, CustomTourScheduleId = 1, NoPax = 2, TotalPrice = 3000m, BookingStatusId = 2, BookingDate = DateTime.Now, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now },
+                new Booking { Id = 2, CustomerId = 2, CustomTourScheduleId = 2, NoPax = 1, TotalPrice = 1200m, BookingStatusId = 1, BookingDate = DateTime.Now.AddDays(-1), IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
             );
 
-            // Seed TourSchedule data
-            modelBuilder.Entity<TourSchedule>().HasData(
-                new TourSchedule { Id = 1, TourId = 1, HotelId = 1, TourStartDate = DateTime.Now.AddDays(5), IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
+            // Payments (referencing Booking and PaymentMethod)
+            modelBuilder.Entity<Payment>().HasData(
+                new Payment { Id = 1, BookingId = 1, DateInvoice = DateTime.Now, AmountInvoice = 1500m, DatePayment = DateTime.Now, AmountPaid = 1500m, PaymentMethodId = 1, TransactionReference = "TX12345", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now },
+                new Payment { Id = 2, BookingId = 2, DateInvoice = DateTime.Now.AddDays(-1), AmountInvoice = 1200m, DatePayment = null, AmountPaid = null, PaymentMethodId = 2, TransactionReference = "TX54321", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
+            );
+
+            // TourActivities (linking tours to activities)
+            modelBuilder.Entity<TourActivity>().HasData(
+                new TourActivity { Id = 1, TourId = 1, ActivityId = 1, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now },
+                new TourActivity { Id = 2, TourId = 1, ActivityId = 2, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
+            );
+
+            // BookingParticipants
+            modelBuilder.Entity<BookingParticipant>().HasData(
+                new BookingParticipant { Id = 1, BookingId = 1, CustomerId = 1, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now },
+                new BookingParticipant { Id = 2, BookingId = 1, CustomerId = 2, IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
             );
 
         }

@@ -23,8 +23,7 @@ namespace SolutionReact.Server.Mappings
                 .Map(d => d.ModifiedDate, s => s.ModifiedDate)
                 .Map(d => d.DeletedBy, s => s.DeletedBy)
                 .Map(d => d.DeletedDate, s => s.DeletedDate)
-                .Map(d => d.Comments, s => s.Comments)
-                .Map(d => d.TimeZone, s => s.TimeZone);
+                .Map(d => d.Comments, s => s.Comments);
 
             // CREATE COMMAND → ENTITY
             TypeAdapterConfig<CreateDestinationCommand, Destination>
@@ -40,7 +39,6 @@ namespace SolutionReact.Server.Mappings
                 .Map(d => d.DeletedBy, s => s.DeletedBy)
                 .Map(d => d.DeletedDate, s => s.DeletedDate)
                 .Map(d => d.Comments, s => s.Comments)
-                .Map(d => d.TimeZone, s => s.TimeZone)
                 .Ignore(d => d.Id);
         }
     }

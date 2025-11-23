@@ -42,6 +42,10 @@ namespace SolutionReact.Server.Migrations
                     b.Property<DateTime>("AddedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("AdditionalRequirements")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
 
@@ -57,11 +61,6 @@ namespace SolutionReact.Server.Migrations
 
                     b.Property<int>("DurationInMinutes")
                         .HasColumnType("int");
-
-                    b.Property<string>("FitnessLevel")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -88,10 +87,10 @@ namespace SolutionReact.Server.Migrations
                             Id = 1,
                             ActivityName = "Sightseeing",
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9921),
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2997),
+                            AdditionalRequirements = "Swimming Certificate",
                             Description = "Visit famous landmarks",
                             DurationInMinutes = 120,
-                            FitnessLevel = "Low",
                             IsActive = true
                         },
                         new
@@ -99,10 +98,10 @@ namespace SolutionReact.Server.Migrations
                             Id = 2,
                             ActivityName = "Hiking",
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9925),
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3000),
+                            AdditionalRequirements = "None",
                             Description = "Mountain trek",
                             DurationInMinutes = 180,
-                            FitnessLevel = "High",
                             IsActive = true
                         });
                 });
@@ -125,10 +124,8 @@ namespace SolutionReact.Server.Migrations
                     b.Property<DateTime>("BookingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("BookingStatus")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("BookingStatusId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Comments")
                         .HasColumnType("nvarchar(max)");
@@ -162,6 +159,8 @@ namespace SolutionReact.Server.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BookingStatusId");
+
                     b.HasIndex("CustomTourScheduleId");
 
                     b.HasIndex("CustomerId");
@@ -173,14 +172,27 @@ namespace SolutionReact.Server.Migrations
                         {
                             Id = 1,
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 391, DateTimeKind.Local).AddTicks(37),
-                            BookingDate = new DateTime(2025, 11, 23, 13, 37, 22, 391, DateTimeKind.Local).AddTicks(35),
-                            BookingStatus = "Confirmed",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3095),
+                            BookingDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3092),
+                            BookingStatusId = 2,
                             CustomTourScheduleId = 1,
                             CustomerId = 1,
                             IsActive = true,
                             NoPax = 2,
                             TotalPrice = 3000m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddedBy = "Admin",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3099),
+                            BookingDate = new DateTime(2025, 11, 22, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3098),
+                            BookingStatusId = 1,
+                            CustomTourScheduleId = 2,
+                            CustomerId = 2,
+                            IsActive = true,
+                            NoPax = 1,
+                            TotalPrice = 1200m
                         });
                 });
 
@@ -230,6 +242,26 @@ namespace SolutionReact.Server.Migrations
                     b.HasIndex("CustomerId");
 
                     b.ToTable("BookingsParticipant");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddedBy = "Admin",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3410),
+                            BookingId = 1,
+                            CustomerId = 1,
+                            IsActive = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddedBy = "Admin",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3412),
+                            BookingId = 1,
+                            CustomerId = 2,
+                            IsActive = true
+                        });
                 });
 
             modelBuilder.Entity("SolutionReact.Server.Models.Customer", b =>
@@ -321,7 +353,7 @@ namespace SolutionReact.Server.Migrations
                         {
                             Id = 1,
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 391, DateTimeKind.Local).AddTicks(8),
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3064),
                             City = "Paris",
                             Country = "France",
                             DateOfBirth = new DateTime(1990, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -337,7 +369,7 @@ namespace SolutionReact.Server.Migrations
                         {
                             Id = 2,
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 391, DateTimeKind.Local).AddTicks(13),
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3069),
                             City = "Florence",
                             Country = "Italy",
                             DateOfBirth = new DateTime(1988, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -396,10 +428,6 @@ namespace SolutionReact.Server.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("TimeZone")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Destination");
@@ -409,7 +437,7 @@ namespace SolutionReact.Server.Migrations
                         {
                             Id = 1,
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9565),
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2930),
                             City = "Paris",
                             Country = "France",
                             IsActive = true,
@@ -419,131 +447,11 @@ namespace SolutionReact.Server.Migrations
                         {
                             Id = 2,
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9618),
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2933),
                             City = "Florence",
                             Country = "Italy",
                             IsActive = true,
                             Region = "Tuscany"
-                        });
-                });
-
-            modelBuilder.Entity("SolutionReact.Server.Models.Hotel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("AddedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("AddedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<TimeSpan>("CheckInTime")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("CheckOutTime")
-                        .HasColumnType("time");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("Comments")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("EMailAddress")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("HotelType")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("PostCode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Hotel");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9951),
-                            Address = "123 Champs-Elysees",
-                            CheckInTime = new TimeSpan(0, 14, 0, 0, 0),
-                            CheckOutTime = new TimeSpan(0, 11, 0, 0, 0),
-                            City = "Paris",
-                            Country = "France",
-                            EMailAddress = "contact@hotelparis.com",
-                            HotelType = "Luxury",
-                            IsActive = true,
-                            Name = "Hotel Paris",
-                            PhoneNumber = "123-456-7890",
-                            PostCode = "75008"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9956),
-                            Address = "456 Via Firenze",
-                            CheckInTime = new TimeSpan(0, 15, 0, 0, 0),
-                            CheckOutTime = new TimeSpan(0, 10, 0, 0, 0),
-                            City = "Florence",
-                            Country = "Italy",
-                            EMailAddress = "info@florenceinn.com",
-                            HotelType = "Boutique",
-                            IsActive = true,
-                            Name = "Florence Inn",
-                            PhoneNumber = "987-654-3210",
-                            PostCode = "50123"
                         });
                 });
 
@@ -595,9 +503,8 @@ namespace SolutionReact.Server.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("PaymentMethod")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("PaymentMethodId")
+                        .HasColumnType("int");
 
                     b.Property<string>("TransactionReference")
                         .HasMaxLength(100)
@@ -607,6 +514,8 @@ namespace SolutionReact.Server.Migrations
 
                     b.HasIndex("BookingId");
 
+                    b.HasIndex("PaymentMethodId");
+
                     b.ToTable("Payments");
 
                     b.HasData(
@@ -614,15 +523,195 @@ namespace SolutionReact.Server.Migrations
                         {
                             Id = 1,
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9984),
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3353),
                             AmountInvoice = 1500m,
                             AmountPaid = 1500m,
                             BookingId = 1,
-                            DateInvoice = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9976),
-                            DatePayment = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9978),
+                            DateInvoice = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3345),
+                            DatePayment = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3348),
                             IsActive = true,
-                            PaymentMethod = "Credit Card",
+                            PaymentMethodId = 1,
                             TransactionReference = "TX12345"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddedBy = "Admin",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3358),
+                            AmountInvoice = 1200m,
+                            BookingId = 2,
+                            DateInvoice = new DateTime(2025, 11, 22, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3355),
+                            IsActive = true,
+                            PaymentMethodId = 2,
+                            TransactionReference = "TX54321"
+                        });
+                });
+
+            modelBuilder.Entity("SolutionReact.Server.Models.PaymentMethod", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PaymentMethods");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddedBy = "System",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2569),
+                            Description = "Payment via major credit cards",
+                            IsActive = true,
+                            Name = "Credit Card"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddedBy = "System",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2628),
+                            Description = "Payment via PayPal account",
+                            IsActive = true,
+                            Name = "PayPal"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AddedBy = "System",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2630),
+                            Description = "Direct bank transfer",
+                            IsActive = true,
+                            Name = "Bank Transfer"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddedBy = "System",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2632),
+                            Description = "Cash payment at counter",
+                            IsActive = true,
+                            Name = "Cash"
+                        });
+                });
+
+            modelBuilder.Entity("SolutionReact.Server.Models.StatusOfEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DeletedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("StatusDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StatusName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StatusOfEntities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AddedBy = "System",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2893),
+                            IsActive = true,
+                            StatusDescription = "Pending confirmation",
+                            StatusName = "Pending"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddedBy = "System",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2897),
+                            IsActive = true,
+                            StatusDescription = "Confirmed",
+                            StatusName = "Confirmed"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AddedBy = "System",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2899),
+                            IsActive = true,
+                            StatusDescription = "Cancelled",
+                            StatusName = "Cancelled"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AddedBy = "System",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2902),
+                            IsActive = true,
+                            StatusDescription = "Completed",
+                            StatusName = "Completed"
                         });
                 });
 
@@ -679,11 +768,6 @@ namespace SolutionReact.Server.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("TourType")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("DestinationId");
@@ -695,27 +779,25 @@ namespace SolutionReact.Server.Migrations
                         {
                             Id = 1,
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9852),
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2966),
                             DestinationId = 1,
                             IsActive = true,
                             LengthInDays = 7,
                             MaxParticipants = 20,
                             Price = 1500m,
-                            TourCode = "ADV-001",
-                            TourType = "Adventure"
+                            TourCode = "ADV-001"
                         },
                         new
                         {
                             Id = 2,
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 390, DateTimeKind.Local).AddTicks(9855),
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(2970),
                             DestinationId = 2,
                             IsActive = true,
                             LengthInDays = 5,
                             MaxParticipants = 15,
                             Price = 1200m,
-                            TourCode = "CUL-001",
-                            TourType = "Cultural"
+                            TourCode = "CUL-001"
                         });
                 });
 
@@ -768,6 +850,26 @@ namespace SolutionReact.Server.Migrations
                     b.HasIndex("TourId");
 
                     b.ToTable("TourActivities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ActivityId = 1,
+                            AddedBy = "Admin",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3381),
+                            IsActive = true,
+                            TourId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ActivityId = 2,
+                            AddedBy = "Admin",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3384),
+                            IsActive = true,
+                            TourId = 1
+                        });
                 });
 
             modelBuilder.Entity("SolutionReact.Server.Models.TourSchedule", b =>
@@ -797,9 +899,6 @@ namespace SolutionReact.Server.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("HotelId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -815,16 +914,14 @@ namespace SolutionReact.Server.Migrations
                     b.Property<DateTime>("TourStartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("TourStatus")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("TourStatusId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HotelId");
-
                     b.HasIndex("TourId");
+
+                    b.HasIndex("TourStatusId");
 
                     b.ToTable("ToursSchedule");
 
@@ -833,31 +930,49 @@ namespace SolutionReact.Server.Migrations
                         {
                             Id = 1,
                             AddedBy = "Admin",
-                            AddedDate = new DateTime(2025, 11, 23, 13, 37, 22, 391, DateTimeKind.Local).AddTicks(61),
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3026),
                             AvailablePax = 0,
-                            HotelId = 1,
                             IsActive = true,
                             TourId = 1,
-                            TourStartDate = new DateTime(2025, 11, 28, 13, 37, 22, 391, DateTimeKind.Local).AddTicks(58),
-                            TourStatus = ""
+                            TourStartDate = new DateTime(2025, 12, 3, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3023),
+                            TourStatusId = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AddedBy = "Admin",
+                            AddedDate = new DateTime(2025, 11, 23, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3031),
+                            AvailablePax = 0,
+                            IsActive = true,
+                            TourId = 2,
+                            TourStartDate = new DateTime(2025, 12, 13, 22, 0, 34, 484, DateTimeKind.Local).AddTicks(3029),
+                            TourStatusId = 1
                         });
                 });
 
             modelBuilder.Entity("SolutionReact.Server.Models.Booking", b =>
                 {
+                    b.HasOne("SolutionReact.Server.Models.StatusOfEntity", "StatusOfEntity")
+                        .WithMany("Bookings")
+                        .HasForeignKey("BookingStatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("SolutionReact.Server.Models.TourSchedule", "TourSchedule")
                         .WithMany("Bookings")
                         .HasForeignKey("CustomTourScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SolutionReact.Server.Models.Customer", "Customer")
                         .WithMany("Bookings")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("StatusOfEntity");
 
                     b.Navigation("TourSchedule");
                 });
@@ -873,7 +988,7 @@ namespace SolutionReact.Server.Migrations
                     b.HasOne("SolutionReact.Server.Models.Customer", "Customer")
                         .WithMany("BookingParticipants")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Booking");
@@ -889,7 +1004,15 @@ namespace SolutionReact.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SolutionReact.Server.Models.PaymentMethod", "PaymentMethod")
+                        .WithMany("Payments")
+                        .HasForeignKey("PaymentMethodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Booking");
+
+                    b.Navigation("PaymentMethod");
                 });
 
             modelBuilder.Entity("SolutionReact.Server.Models.Tour", b =>
@@ -897,7 +1020,7 @@ namespace SolutionReact.Server.Migrations
                     b.HasOne("SolutionReact.Server.Models.Destination", "Destination")
                         .WithMany("Tours")
                         .HasForeignKey("DestinationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Destination");
@@ -908,13 +1031,13 @@ namespace SolutionReact.Server.Migrations
                     b.HasOne("SolutionReact.Server.Models.Activity", "Activity")
                         .WithMany("TourActivities")
                         .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SolutionReact.Server.Models.Tour", "Tour")
                         .WithMany("TourActivities")
                         .HasForeignKey("TourId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Activity");
@@ -924,17 +1047,19 @@ namespace SolutionReact.Server.Migrations
 
             modelBuilder.Entity("SolutionReact.Server.Models.TourSchedule", b =>
                 {
-                    b.HasOne("SolutionReact.Server.Models.Hotel", "Hotel")
-                        .WithMany("TourSchedules")
-                        .HasForeignKey("HotelId");
-
                     b.HasOne("SolutionReact.Server.Models.Tour", "Tour")
                         .WithMany("TourSchedules")
                         .HasForeignKey("TourId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Hotel");
+                    b.HasOne("SolutionReact.Server.Models.StatusOfEntity", "StatusOfEntity")
+                        .WithMany("TourSchedules")
+                        .HasForeignKey("TourStatusId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("StatusOfEntity");
 
                     b.Navigation("Tour");
                 });
@@ -963,8 +1088,15 @@ namespace SolutionReact.Server.Migrations
                     b.Navigation("Tours");
                 });
 
-            modelBuilder.Entity("SolutionReact.Server.Models.Hotel", b =>
+            modelBuilder.Entity("SolutionReact.Server.Models.PaymentMethod", b =>
                 {
+                    b.Navigation("Payments");
+                });
+
+            modelBuilder.Entity("SolutionReact.Server.Models.StatusOfEntity", b =>
+                {
+                    b.Navigation("Bookings");
+
                     b.Navigation("TourSchedules");
                 });
 
