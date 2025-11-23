@@ -2,22 +2,16 @@
 
 namespace SolutionReact.Server.Requests.Activities.Commands
 {
+
+    //zwraca id dodanej aktywnosci, klasa okresla jakie dane sa przyjmowane do dodania nowej aktywnosci
     public class CreateActivityCommand : IRequest<int>
     {
-        public int Id { get; set; }
-        public string Description { get; set; } = string.Empty;
-        public bool IsActive { get; set; }
-        public string AddedBy { get; set; } = string.Empty;
-        public DateTime AddedDate { get; set; }
-        public string? ModifiedBy { get; set; }
-        public DateTime? ModifiedDate { get; set; }
-        public string? DeletedBy { get; set; }
-        public DateTime? DeletedDate { get; set; }
+        public string Description { get; set; }
         public string? Comments { get; set; }
-        public string ActivityName { get; set; } = string.Empty;
+        public string ActivityName { get; set; }
         public int? MinimumAge { get; set; }
         public int? MaximumAge { get; set; }
-        public string FitnessLevel { get; set; } = string.Empty;
+        public string FitnessLevel { get; set; }
         public int DurationInMinutes { get; set; }
     }
 }

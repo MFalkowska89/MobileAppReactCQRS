@@ -31,8 +31,8 @@ namespace SolutionReact.Server.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateActivityCommand command)
         {
-            var itemId = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetAll), new { id = itemId }, itemId);
+            var activityId = await _mediator.Send(command);
+            return CreatedAtAction(nameof(GetAll), new { id = activityId }, activityId);
         }
     }
 }
