@@ -3,24 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|c:\\users\\gosia\\desktop\\tmab projekt\\git\\mobileappreactcqrs\\solutionreact\\solutionreact.server\\handlers\\activities\\createactivityhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|solutionrelative:solutionreact.server\\handlers\\activities\\createactivityhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|c:\\users\\gosia\\desktop\\tmab projekt\\git\\mobileappreactcqrs\\solutionreact\\solutionreact.server\\controllers\\activitycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|solutionrelative:solutionreact.server\\controllers\\activitycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|c:\\users\\gosia\\desktop\\tmab projekt\\git\\mobileappreactcqrs\\solutionreact\\solutionreact.server\\handlers\\activities\\getallactivitieshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|solutionrelative:solutionreact.server\\handlers\\activities\\getallactivitieshandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|c:\\users\\gosia\\desktop\\tmab projekt\\git\\mobileappreactcqrs\\solutionreact\\solutionreact.server\\requests\\activities\\queries\\getallactivitiesquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|solutionrelative:solutionreact.server\\requests\\activities\\queries\\getallactivitiesquery.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|c:\\users\\gosia\\desktop\\tmab projekt\\git\\mobileappreactcqrs\\solutionreact\\solutionreact.server\\requests\\activities\\commands\\createactivitycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|solutionrelative:solutionreact.server\\requests\\activities\\commands\\createactivitycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|c:\\users\\gosia\\desktop\\tmab projekt\\git\\mobileappreactcqrs\\solutionreact\\solutionreact.server\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D2E0EDA6-0D94-40B8-BC8A-E505A1FC72CA}|SolutionReact.Server\\SolutionReact.Server.csproj|solutionrelative:solutionreact.server\\controllers\\bookingcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,66 +23,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CreateActivityHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Handlers\\Activities\\CreateActivityHandler.cs",
-              "RelativeDocumentMoniker": "SolutionReact.Server\\Handlers\\Activities\\CreateActivityHandler.cs",
-              "ToolTip": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Handlers\\Activities\\CreateActivityHandler.cs",
-              "RelativeToolTip": "SolutionReact.Server\\Handlers\\Activities\\CreateActivityHandler.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAAAAAAAAAAAA==",
+              "Title": "BookingController.cs",
+              "DocumentMoniker": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Controllers\\BookingController.cs",
+              "RelativeDocumentMoniker": "SolutionReact.Server\\Controllers\\BookingController.cs",
+              "ToolTip": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Controllers\\BookingController.cs",
+              "RelativeToolTip": "SolutionReact.Server\\Controllers\\BookingController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-22T12:44:18.44Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ActivityController.cs",
-              "DocumentMoniker": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Controllers\\ActivityController.cs",
-              "RelativeDocumentMoniker": "SolutionReact.Server\\Controllers\\ActivityController.cs",
-              "ToolTip": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Controllers\\ActivityController.cs",
-              "RelativeToolTip": "SolutionReact.Server\\Controllers\\ActivityController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-22T12:41:03.121Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GetAllActivitiesHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Handlers\\Activities\\GetAllActivitiesHandler.cs",
-              "RelativeDocumentMoniker": "SolutionReact.Server\\Handlers\\Activities\\GetAllActivitiesHandler.cs",
-              "ToolTip": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Handlers\\Activities\\GetAllActivitiesHandler.cs",
-              "RelativeToolTip": "SolutionReact.Server\\Handlers\\Activities\\GetAllActivitiesHandler.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-22T12:14:27.044Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CreateActivityCommand.cs",
-              "DocumentMoniker": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Requests\\Activities\\Commands\\CreateActivityCommand.cs",
-              "RelativeDocumentMoniker": "SolutionReact.Server\\Requests\\Activities\\Commands\\CreateActivityCommand.cs",
-              "ToolTip": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Requests\\Activities\\Commands\\CreateActivityCommand.cs",
-              "RelativeToolTip": "SolutionReact.Server\\Requests\\Activities\\Commands\\CreateActivityCommand.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-22T12:07:03.27Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "GetAllActivitiesQuery.cs",
-              "DocumentMoniker": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Requests\\Activities\\Queries\\GetAllActivitiesQuery.cs",
-              "RelativeDocumentMoniker": "SolutionReact.Server\\Requests\\Activities\\Queries\\GetAllActivitiesQuery.cs",
-              "ToolTip": "C:\\Users\\Gosia\\Desktop\\TMAB Projekt\\Git\\MobileAppReactCQRS\\SolutionReact\\SolutionReact.Server\\Requests\\Activities\\Queries\\GetAllActivitiesQuery.cs",
-              "RelativeToolTip": "SolutionReact.Server\\Requests\\Activities\\Queries\\GetAllActivitiesQuery.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-22T11:56:20.587Z",
+              "WhenOpened": "2025-12-09T19:38:30.622Z",
               "EditorCaption": ""
             }
           ]

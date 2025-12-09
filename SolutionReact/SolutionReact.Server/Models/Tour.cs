@@ -7,6 +7,7 @@
         public int LengthInDays { get; set; }
         public string? Description { get; set; }
         public decimal Price { get; set; }
+        public int MinParticipants { get; set; }
         public int MaxParticipants { get; set; }
         public bool IsActive { get; set; }
         public string AddedBy { get; set; } = string.Empty;
@@ -17,6 +18,8 @@
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public string? Comments { get; set; }
         public string TourCode { get; set; } = string.Empty;
+        public string TourName { get; set; } = string.Empty;
+
 
         public virtual Destination Destination { get; set; } = null!;
 

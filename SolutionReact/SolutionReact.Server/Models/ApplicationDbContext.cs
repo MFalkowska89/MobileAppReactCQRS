@@ -15,11 +15,9 @@ namespace SolutionReact.Server.Models
         public DbSet<BookingParticipant> BookingsParticipant { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Destination> Destination { get; set; }
-        public DbSet<Payment> Payments { get; set; }
         public DbSet<Tour> Tours { get; set; }
         public DbSet<TourActivity> TourActivities { get; set; }
         public DbSet<TourSchedule> ToursSchedule { get; set; }
-        public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public DbSet<StatusOfEntity> StatusOfEntities { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -63,10 +61,6 @@ namespace SolutionReact.Server.Models
                         .WithMany(s => s.Bookings)          // collection in StatusOfEntity
                         .HasForeignKey(b => b.BookingStatusId) // FK property in Booking
                         .OnDelete(DeleteBehavior.Restrict);
-
-                entity.HasMany(b => b.Payments)
-                      .WithOne(p => p.Booking)
-                      .HasForeignKey(p => p.BookingId);
 
             });
 
@@ -127,20 +121,6 @@ namespace SolutionReact.Server.Models
 
             });
 
-            modelBuilder.Entity<Payment>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-                entity.Property(e => e.AmountInvoice).HasColumnType("decimal(10,2)");
-                entity.Property(e => e.AmountPaid).HasColumnType("decimal(10,2)");
-                entity.Property(e => e.TransactionReference).HasMaxLength(100);
-
-                entity.HasOne(p => p.Booking)
-                      .WithMany(b => b.Payments)
-                      .HasForeignKey(p => p.BookingId);
-
-            });
 
             modelBuilder.Entity<Tour>(entity =>
             {
@@ -199,23 +179,6 @@ namespace SolutionReact.Server.Models
 
             });
 
-            modelBuilder.Entity<PaymentMethod>(entity =>
-            {
-                // Primary Key
-                entity.HasKey(e => e.Id);
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
-                // Properties
-                entity.Property(e => e.Name)
-                      .IsRequired()
-                      .HasMaxLength(20); // Adjust max length as needed
-
-                // Relationships
-                entity.HasMany(pm => pm.Payments)
-                      .WithOne(p => p.PaymentMethod)
-                      .HasForeignKey(p => p.PaymentMethodId);
-
-            });
 
             modelBuilder.Entity<StatusOfEntity>(entity =>
             {
@@ -246,13 +209,6 @@ namespace SolutionReact.Server.Models
 
         private void SeedData(ModelBuilder modelBuilder)
         {
-            // Payment methods
-            modelBuilder.Entity<PaymentMethod>().HasData(
-                new PaymentMethod { Id = 1, Name = "Credit Card", Description = "Payment via major credit cards", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now },
-                new PaymentMethod { Id = 2, Name = "PayPal", Description = "Payment via PayPal account", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now },
-                new PaymentMethod { Id = 3, Name = "Bank Transfer", Description = "Direct bank transfer", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now },
-                new PaymentMethod { Id = 4, Name = "Cash", Description = "Cash payment at counter", IsActive = true, AddedBy = "System", AddedDate = DateTime.Now }
-            );
 
             // Entity statuses (for bookings / tour schedules)
             modelBuilder.Entity<StatusOfEntity>().HasData(
@@ -298,11 +254,6 @@ namespace SolutionReact.Server.Models
                 new Booking { Id = 2, CustomerId = 2, CustomTourScheduleId = 2, NoPax = 1, TotalPrice = 1200m, BookingStatusId = 1, BookingDate = DateTime.Now.AddDays(-1), IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
             );
 
-            // Payments (referencing Booking and PaymentMethod)
-            modelBuilder.Entity<Payment>().HasData(
-                new Payment { Id = 1, BookingId = 1, DateInvoice = DateTime.Now, AmountInvoice = 1500m, DatePayment = DateTime.Now, AmountPaid = 1500m, PaymentMethodId = 1, TransactionReference = "TX12345", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now },
-                new Payment { Id = 2, BookingId = 2, DateInvoice = DateTime.Now.AddDays(-1), AmountInvoice = 1200m, DatePayment = null, AmountPaid = null, PaymentMethodId = 2, TransactionReference = "TX54321", IsActive = true, AddedBy = "Admin", AddedDate = DateTime.Now }
-            );
 
             // TourActivities (linking tours to activities)
             modelBuilder.Entity<TourActivity>().HasData(
