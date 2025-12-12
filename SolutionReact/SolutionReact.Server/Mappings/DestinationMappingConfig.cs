@@ -16,13 +16,6 @@ namespace SolutionReact.Server.Mappings
                 .Map(d => d.Country, s => s.Country)
                 .Map(d => d.Region, s => s.Region)
                 .Map(d => d.City, s => s.City)
-                .Map(d => d.IsActive, s => s.IsActive)
-                .Map(d => d.AddedBy, s => s.AddedBy)
-                .Map(d => d.AddedDate, s => s.AddedDate)
-                .Map(d => d.ModifiedBy, s => s.ModifiedBy)
-                .Map(d => d.ModifiedDate, s => s.ModifiedDate)
-                .Map(d => d.DeletedBy, s => s.DeletedBy)
-                .Map(d => d.DeletedDate, s => s.DeletedDate)
                 .Map(d => d.Comments, s => s.Comments);
 
             // CREATE COMMAND → ENTITY

@@ -7,6 +7,7 @@ using SolutionReact.Server.Requests.Activities.Queries;
 
 namespace SolutionReact.Server.Handlers.Activities
 {
+    // get all items query -> request / list <ActivityDto> -> to co handler zwraca
     public class GetAllActivitiesHandler : IRequestHandler<GetAllActivitiesQuery, List<ActivityDto>>
     {
         private readonly ApplicationDbContext _context;

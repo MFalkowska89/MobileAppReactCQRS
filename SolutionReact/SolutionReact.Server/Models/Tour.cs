@@ -19,6 +19,8 @@
         public string? Comments { get; set; }
         public string TourCode { get; set; } = string.Empty;
         public string TourName { get; set; } = string.Empty;
+        public string FotoURL { get; set; } = string.Empty;
+
 
 
         public virtual Destination Destination { get; set; } = null!;

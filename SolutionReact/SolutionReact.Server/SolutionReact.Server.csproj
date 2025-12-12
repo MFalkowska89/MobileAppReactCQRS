@@ -37,6 +37,8 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Requests\TourSchedules\Commands\" />
+    <Folder Include="Requests\TourSchedules\Queries\" />
     <Folder Include="Requests\Tours\Commands\" />
   </ItemGroup>
 
