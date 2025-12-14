@@ -1,6 +1,10 @@
-﻿namespace SolutionReact.Server.Requests.Bookings.Commands
+﻿using MediatR;
+
+namespace SolutionReact.Server.Requests.Bookings.Commands
 {
-    public class CreateBookingCommand
+    public class CreateBookingCommand : IRequest<int>
     {
+
     }
 }
+ 

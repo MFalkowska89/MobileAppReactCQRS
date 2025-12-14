@@ -4,12 +4,12 @@ using SolutionReact.Server.Models;
 
 namespace SolutionReact.Server.Mappings
 {
-    public class TourMappingConfig
+    public class TourBasicMappingConfig
     {
         public static void Configure()
         {
             // ENTITY → DTO
-            TypeAdapterConfig<Tour, TourDto>
+            TypeAdapterConfig<Tour, TourBasicDto>
                 .NewConfig()
                 .Map(t => t.Id, src => src.Id)
                 .Map(t => t.DestinationId, src => src.DestinationId)
@@ -20,10 +20,7 @@ namespace SolutionReact.Server.Mappings
                 .Map(t => t.Name, src => src.TourName)
                 .Map(t => t.Price, src => src.Price)
                 .Map(t => t.FotoURL, src => src.FotoURL)
-                .Map(t => t.MinParticipants, src => src.MinParticipants)
-                .Map(t => t.MaxParticipants, src => src.MaxParticipants)
-                .Map(t => t.TourCode, src => src.TourCode)
-                .Map(t => t.TourActivities, src => src.TourActivities);
+                .Map(t => t.Description, src => src.Description);
         }
     }
 }

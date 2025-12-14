@@ -1,107 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SolutionReact.Server.Models;
+using SolutionReact.Server.Dto;
+using SolutionReact.Server.Requests.TourSchedules.Queries;
 
 namespace SolutionReact.Server.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class TourScheduleController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
 
-        public TourScheduleController(ApplicationDbContext context)
+        private readonly IMediator _mediator;
+
+        public TourScheduleController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
 
-        // GET: api/TourSchedule
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<TourSchedule>>> GetToursSchedule()
+        [HttpGet("tour/{tourId}")]
+        [ProducesResponseType(typeof(List<TourScheduleDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetByTourId(int tourId)
         {
-            return await _context.ToursSchedule.ToListAsync();
-        }
+            var query = new GetTourSchedulesByTourIdQuery(tourId);
+            var result = await _mediator.Send(query);
 
-        // GET: api/TourSchedule/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TourSchedule>> GetTourSchedule(int id)
-        {
-            var tourSchedule = await _context.ToursSchedule.FindAsync(id);
-
-            if (tourSchedule == null)
-            {
-                return NotFound();
-            }
-
-            return tourSchedule;
-        }
-
-        // PUT: api/TourSchedule/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTourSchedule(int id, TourSchedule tourSchedule)
-        {
-            if (id != tourSchedule.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(tourSchedule).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TourScheduleExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/TourSchedule
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<TourSchedule>> PostTourSchedule(TourSchedule tourSchedule)
-        {
-            _context.ToursSchedule.Add(tourSchedule);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTourSchedule", new { id = tourSchedule.Id }, tourSchedule);
-        }
-
-        // DELETE: api/TourSchedule/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTourSchedule(int id)
-        {
-            var tourSchedule = await _context.ToursSchedule.FindAsync(id);
-            if (tourSchedule == null)
-            {
-                return NotFound();
-            }
-
-            _context.ToursSchedule.Remove(tourSchedule);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool TourScheduleExists(int id)
-        {
-            return _context.ToursSchedule.Any(e => e.Id == id);
+            return Ok(result);
         }
     }
 }
+

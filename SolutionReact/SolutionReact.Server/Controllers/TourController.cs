@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SolutionReact.Server.Models;
+using SolutionReact.Server.Dto;
+using SolutionReact.Server.Requests.Tours.Queries;
 
 namespace SolutionReact.Server.Controllers
 {
@@ -13,95 +9,36 @@ namespace SolutionReact.Server.Controllers
     [ApiController]
     public class TourController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
 
-        public TourController(ApplicationDbContext context)
+        private readonly IMediator _mediator;
+
+        public TourController(IMediator mediator)
         {
-            _context = context;
+            _mediator = mediator;
         }
 
-        // GET: api/Tour
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tour>>> GetTours()
+        public async Task<IActionResult> GetAll()
         {
-            return await _context.Tours.ToListAsync();
+            var query = new GetAllToursQuery();
+            var result = await _mediator.Send(query);
+            return Ok(result);
         }
 
-        // GET: api/Tour/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Tour>> GetTour(int id)
+        [ProducesResponseType(typeof(List<TourDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetById(int id)
         {
-            var tour = await _context.Tours.FindAsync(id);
+            var query = new GetTourByIdQuery(id);
+            var result = await _mediator.Send(query);
 
-            if (tour == null)
+            if (result == null)
             {
-                return NotFound();
+                return NotFound(new { message = $"No tour found with ID {id}" });
             }
 
-            return tour;
-        }
-
-        // PUT: api/Tour/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutTour(int id, Tour tour)
-        {
-            if (id != tour.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(tour).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!TourExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/Tour
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Tour>> PostTour(Tour tour)
-        {
-            _context.Tours.Add(tour);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetTour", new { id = tour.Id }, tour);
-        }
-
-        // DELETE: api/Tour/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTour(int id)
-        {
-            var tour = await _context.Tours.FindAsync(id);
-            if (tour == null)
-            {
-                return NotFound();
-            }
-
-            _context.Tours.Remove(tour);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool TourExists(int id)
-        {
-            return _context.Tours.Any(e => e.Id == id);
+            return Ok(result);
         }
     }
 }

@@ -13,6 +13,5 @@
         public string PhoneNumber { get; set; } = string.Empty;
         public string? PhoneNumberExtra { get; set; }
         public string EmailAddress { get; set; } = string.Empty;
-        public string? Comments { get; set; }
     }
 }

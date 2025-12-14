@@ -21,7 +21,10 @@ namespace SolutionReact.Server
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Mapster config
-            ActivityMappingConfig.Configure();
+            TourScheduleMappingConfig.Configure();
+            TourBasicMappingConfig.Configure();
+            TourMappingConfig.Configure();
+            TourActivityMappingConfig.Configure();
 
             // MediatR
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

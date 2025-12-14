@@ -1,6 +1,9 @@
-﻿namespace SolutionReact.Server.Requests.Tours.Queries
+﻿using MediatR;
+using SolutionReact.Server.Dto;
+
+namespace SolutionReact.Server.Requests.Tours.Queries
 {
-    public class GetAllToursQuery
+    public class GetAllToursQuery : IRequest<List<TourBasicDto>>
     {
     }
 }
