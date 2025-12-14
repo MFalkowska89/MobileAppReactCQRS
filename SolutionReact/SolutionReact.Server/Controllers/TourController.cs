@@ -26,7 +26,7 @@ namespace SolutionReact.Server.Controllers
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(List<TourDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TourDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {

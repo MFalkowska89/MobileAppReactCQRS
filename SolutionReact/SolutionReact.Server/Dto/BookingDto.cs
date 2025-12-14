@@ -15,7 +15,6 @@
         public int NoPax { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTime BookingDate { get; set; }
-        public string? Comments { get; set; }
         public List<CustomerDto> BookingParticipants { get; set; } = new List<CustomerDto>();
     }
 }

@@ -25,6 +25,7 @@ namespace SolutionReact.Server
             TourBasicMappingConfig.Configure();
             TourMappingConfig.Configure();
             TourActivityMappingConfig.Configure();
+            CustomerMappingConfig.Configure();
 
             // MediatR
             builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
