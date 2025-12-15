@@ -2,11 +2,9 @@
 
 namespace SolutionReact.Server.Requests.Customers.Commands
 {
-    public class CreateCustomerCommand : IRequest<int>
+    public class UpdateCustomerCommand : IRequest<Unit>
     {
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public DateTime DateOfBirth { get; set; }
+        public int Id { get; set; }
         public string HomeAddress { get; set; } = string.Empty;
         public string PostCode { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;

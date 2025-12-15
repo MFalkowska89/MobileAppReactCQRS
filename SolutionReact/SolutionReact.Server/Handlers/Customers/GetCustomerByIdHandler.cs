@@ -17,13 +17,13 @@ namespace SolutionReact.Server.Handlers.Customers
 
         public async Task<CustomerDto?> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
         {
-            var tour = await _context.Customers
+            var customer = await _context.Customers
                 .Where(c => c.Id == request.Id && c.IsActive)
                 .AsNoTracking()
                 .Select(t => t.Adapt<CustomerDto>())
                 .FirstOrDefaultAsync(cancellationToken);
 
-            return tour;
+            return customer;
         }
     }
 }

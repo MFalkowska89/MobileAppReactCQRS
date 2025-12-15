@@ -18,6 +18,7 @@ namespace SolutionReact.Server.Mappings
                 .Map(t => t.DestinationRegion, src => src.Destination.Region)
                 .Map(t => t.LengthInDays, src => src.LengthInDays)
                 .Map(t => t.Name, src => src.TourName)
+                .Map(t => t.Description, src => src.Description)
                 .Map(t => t.Price, src => src.Price)
                 .Map(t => t.FotoURL, src => src.FotoURL)
                 .Map(t => t.MinParticipants, src => src.MinParticipants)

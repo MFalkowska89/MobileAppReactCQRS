@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using SolutionReact.Server.Dto;
 using SolutionReact.Server.Models;
+using SolutionReact.Server.Requests.Bookings.Commands;
 
 namespace SolutionReact.Server.Mappings
 {
@@ -22,7 +23,18 @@ namespace SolutionReact.Server.Mappings
                 .Map(t => t.NoPax, src => src.NoPax)
                 .Map(t => t.TotalPrice, src => src.TotalPrice)
                 .Map(t => t.BookingDate, src => src.BookingDate)
-                .Map(t => t.BookingParticipants, src => src.BookingParticipants); // here i need to get to customers somehow?
+                .Map(t => t.BookingParticipants, src => src.BookingParticipants); // this one needs to be fixed
+
+            TypeAdapterConfig<CreateBookingCommand, Booking> // i should be also getting id of customers for booking participantS?
+               .NewConfig()
+               .Map(t => t.CustomerId, src => src.CustomerId)
+               .Map(t => t.CustomTourScheduleId, src => src.CustomTourScheduleId)
+               .Map(t => t.NoPax, src => src.NoPax);
+
+            TypeAdapterConfig<UpdateBookingCommand, Booking>
+              .NewConfig()
+              .Map(t => t.CustomTourScheduleId, src => src.CustomTourScheduleId)
+              .Map(t => t.NoPax, src => src.NoPax);
         }
     }
 }

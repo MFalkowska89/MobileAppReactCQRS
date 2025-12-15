@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SolutionReact.Server.Dto;
+using SolutionReact.Server.Requests.Bookings.Commands;
 using SolutionReact.Server.Requests.Bookings.Queries;
 
 namespace SolutionReact.Server.Controllers
@@ -31,6 +32,42 @@ namespace SolutionReact.Server.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Create([FromBody] CreateBookingCommand command)
+        {
+            var unitId = await _mediator.Send(command);
+
+            return CreatedAtAction(
+                nameof(GetById),
+                new { id = unitId },
+                new { id = unitId, message = "Jednostka miary została utworzona" }
+            );
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateBookingCommand command)
+        {
+            if (id != command.IdUnitOfMeasurement)
+            {
+                return BadRequest(new { message = "ID w URL różni się od ID w body" });
+            }
+
+            try
+            {
+                await _mediator.Send(command);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
     }
 }

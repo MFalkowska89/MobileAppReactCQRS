@@ -2,11 +2,10 @@
 
 namespace SolutionReact.Server.Requests.Bookings.Commands
 {
-    public class CreateBookingCommand : IRequest<int>
+    public class UpdateBookingCommand : IRequest <Unit>
     {
-        public int CustomerId { get; set; }
+        public int Id { get; set; }
         public int CustomTourScheduleId { get; set; }
         public int NoPax { get; set; }
     }
 }
- 
