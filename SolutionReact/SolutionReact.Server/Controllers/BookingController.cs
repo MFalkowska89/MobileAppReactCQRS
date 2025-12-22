@@ -18,6 +18,8 @@ namespace SolutionReact.Server.Controllers
             _mediator = mediator;
         }
 
+        // potrzebuje nastepujace: get booking by id, create booking, update booking, delete booking
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(BookingDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

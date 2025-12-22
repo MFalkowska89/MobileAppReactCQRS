@@ -17,6 +17,8 @@ namespace SolutionReact.Server.Controllers
             _mediator = mediator;
         }
 
+        // potrzebuje nastepujace: get tour basic, get tour by id 
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {

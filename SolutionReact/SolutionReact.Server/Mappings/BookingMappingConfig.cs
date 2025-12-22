@@ -13,12 +13,9 @@ namespace SolutionReact.Server.Mappings
             TypeAdapterConfig<Booking, BookingDto>
                 .NewConfig()
                 .Map(t => t.Id, src => src.Id)
-                .Map(t => t.CustomerId, src => src.CustomerId)
-                .Map(t => t.CustomTourScheduleId, src => src.CustomTourScheduleId)
                 .Map(t => t.DestinationCity, src => src.TourSchedule.Tour.Destination.City)
                 .Map(t => t.DestinationCountry, src => src.TourSchedule.Tour.Destination.Country)
                 .Map(t => t.DestinationRegion, src => src.TourSchedule.Tour.Destination.Region)
-                .Map(t => t.BookingStatusId, src => src.BookingStatusId)
                 .Map(t => t.BookingStatusName, src => src.StatusOfEntity.StatusName)
                 .Map(t => t.NoPax, src => src.NoPax)
                 .Map(t => t.TotalPrice, src => src.TotalPrice)
@@ -29,12 +26,21 @@ namespace SolutionReact.Server.Mappings
                .NewConfig()
                .Map(t => t.CustomerId, src => src.CustomerId)
                .Map(t => t.CustomTourScheduleId, src => src.CustomTourScheduleId)
-               .Map(t => t.NoPax, src => src.NoPax);
+               .Map(t => t.NoPax, src => src.NoPax)
+                        .Map(dest => dest.BookingParticipants,
+                src => src.BookingParticipantIds.Select(id => new BookingParticipant
+                {
+                    CustomerId = id,
+                    IsActive = true,
+                    AddedBy = "user",
+                    AddedDate = DateTime.UtcNow
+                }).ToList()
+                );
 
             TypeAdapterConfig<UpdateBookingCommand, Booking>
               .NewConfig()
-              .Map(t => t.CustomTourScheduleId, src => src.CustomTourScheduleId)
-              .Map(t => t.NoPax, src => src.NoPax);
+                  .Map(t => t.CustomTourScheduleId, src => src.CustomTourScheduleId)
+                  .Map(t => t.NoPax, src => src.NoPax);
         }
     }
 }

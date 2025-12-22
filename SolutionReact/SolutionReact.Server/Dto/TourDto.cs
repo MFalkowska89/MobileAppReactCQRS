@@ -16,6 +16,6 @@ namespace SolutionReact.Server.Dto
         public int MinParticipants { get; set; }
         public string TourCode { get; set; } = string.Empty;
         public string FotoURL { get; set; } = string.Empty;
-        public List<TourActivityDto> TourActivities { get; set; } = new List<TourActivityDto>();
+        public List<ActivityDto> TourActivities { get; set; } = new List<ActivityDto>();
     }
 }

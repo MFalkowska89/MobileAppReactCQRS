@@ -9,9 +9,9 @@ namespace SolutionReact.Server.Mappings
         public static void Configure()
         {
             // ENTITY → DTO
-            TypeAdapterConfig<TourActivity, TourActivityDto>
+            TypeAdapterConfig<TourActivity, ActivityDto>
                 .NewConfig()
-                .Map(t => t.TourActivityId, src => src.Id)
+                .Map(t => t.ActivityId, src => src.Activity.Id)
                 .Map(t => t.DayScheduled, src => src.DayScheduled)
                 .Map(t => t.ActivityName, src => src.Activity.ActivityName)
                 .Map(t => t.Description, src => src.Activity.Description)

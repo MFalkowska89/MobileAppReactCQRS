@@ -7,6 +7,7 @@ namespace SolutionReact.Server.Requests.Bookings.Commands
         public int CustomerId { get; set; }
         public int CustomTourScheduleId { get; set; }
         public int NoPax { get; set; }
+        public List<int> BookingParticipantIds { get; set; }
     }
 }
  

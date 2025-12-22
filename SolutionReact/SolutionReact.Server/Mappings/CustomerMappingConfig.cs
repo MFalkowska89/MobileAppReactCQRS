@@ -12,7 +12,7 @@ namespace SolutionReact.Server.Mappings
             // ENTITY → DTO
             TypeAdapterConfig<Customer, CustomerDto>
                 .NewConfig()
-                .Map(t => t.Id, src => src.Id)
+                .Map(t => t.CustomerId, src => src.Id)
                 .Map(t => t.FirstName, src => src.FirstName)
                 .Map(t => t.LastName, src => src.LastName)
                 .Map(t => t.DateOfBirth, src => src.DateOfBirth)
@@ -24,7 +24,7 @@ namespace SolutionReact.Server.Mappings
                 .Map(t => t.PhoneNumberExtra, src => src.PhoneNumberExtra)
                 .Map(t => t.EmailAddress, src => src.EmailAddress);
 
-            TypeAdapterConfig<CreateCustomerCommand, Customer>
+            TypeAdapterConfig<CustomerDto, Customer>
                 .NewConfig()
                 .Map(t => t.FirstName, src => src.FirstName)
                 .Map(t => t.LastName, src => src.LastName)
@@ -35,7 +35,8 @@ namespace SolutionReact.Server.Mappings
                 .Map(t => t.Country, src => src.Country)
                 .Map(t => t.PhoneNumber, src => src.PhoneNumber)
                 .Map(t => t.PhoneNumberExtra, src => src.PhoneNumberExtra)
-                .Map(t => t.EmailAddress, src => src.EmailAddress);
+                .Map(t => t.EmailAddress, src => src.EmailAddress)
+                .Map(t => t.IsActive, src => true);
 
             TypeAdapterConfig<UpdateCustomerCommand, Customer>
                .NewConfig()

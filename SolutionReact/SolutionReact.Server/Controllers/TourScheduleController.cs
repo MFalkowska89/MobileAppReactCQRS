@@ -17,6 +17,8 @@ namespace SolutionReact.Server.Controllers
             _mediator = mediator;
         }
 
+        // potrzebuje get tour schedule by tour id
+
         [HttpGet("tour/{tourId}")]
         [ProducesResponseType(typeof(List<TourScheduleDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SolutionReact.Server.Dto;
+using SolutionReact.Server.Requests.Customers.Commands;
 using SolutionReact.Server.Requests.Customers.Queries;
 
 namespace SolutionReact.Server.Controllers
@@ -31,6 +32,20 @@ namespace SolutionReact.Server.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Create([FromBody] CreateCustomerCommand command)
+        {
+            var customerIds = await _mediator.Send(command);
+
+            return Ok(new
+            {
+                ids = customerIds,
+                message = "Customers processed successfully"
+            });
         }
     }
 }
