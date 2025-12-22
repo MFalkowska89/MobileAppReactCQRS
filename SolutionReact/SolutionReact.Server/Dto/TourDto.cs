@@ -5,7 +5,6 @@ namespace SolutionReact.Server.Dto
     public class TourDto // only tour for the customer dto
     {
         public int Id { get; set; }
-        public int DestinationId { get; set; }
         public string DestinationCountry { get; set; } = string.Empty;
         public string DestinationCity { get; set; } = string.Empty;
         public string DestinationRegion { get; set; } = string.Empty;

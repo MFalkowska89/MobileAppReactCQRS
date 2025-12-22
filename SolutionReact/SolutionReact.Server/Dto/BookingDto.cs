@@ -3,7 +3,7 @@
     public class BookingDto // czy to moze byc tak czy powinnam miec oddzielna klase w ktorej to wszystko jest wrzucone? 
     {
         public int Id { get; set; }
-        public int CustomerId { get; set; }
+        public int CustomerId { get; set; } // to chyba powinnam wywalic
         public int CustomTourScheduleId { get; set; }
         public DateTime TourStartDate { get; set; }
         public DateTime TourEndDate { get; set; }

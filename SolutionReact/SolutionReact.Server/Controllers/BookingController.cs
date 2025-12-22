@@ -54,7 +54,7 @@ namespace SolutionReact.Server.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Update(int id, [FromBody] UpdateBookingCommand command)
         {
-            if (id != command.IdUnitOfMeasurement)
+            if (id != command.Id)
             {
                 return BadRequest(new { message = "ID w URL różni się od ID w body" });
             }
@@ -69,5 +69,5 @@ namespace SolutionReact.Server.Controllers
                 return NotFound(new { message = ex.Message });
             }
         }
-    }
+    } // czy powinnam miec customer i booking participant oddzielnie?
 }

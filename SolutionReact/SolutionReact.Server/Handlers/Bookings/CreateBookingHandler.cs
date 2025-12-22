@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Mapster;
+using MediatR;
 using SolutionReact.Server.Models;
 using SolutionReact.Server.Requests.Bookings.Commands;
 
@@ -15,12 +16,7 @@ namespace SolutionReact.Server.Handlers.Bookings
 
         public async Task<int> Handle(CreateBookingCommand request, CancellationToken cancellationToken) // czy to nie powinno isc z mappera?
         {
-            var booking = new Booking
-            {
-                CustomerId = request.CustomerId,
-                CustomTourScheduleId = request.CustomTourScheduleId,
-                NoPax = request.NoPax
-            };
+            var booking = request.Adapt<Booking>();
 
             _context.Bookings.Add(booking);
             await _context.SaveChangesAsync(cancellationToken);

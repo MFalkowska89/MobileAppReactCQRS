@@ -12,7 +12,6 @@ namespace SolutionReact.Server.Mappings
             TypeAdapterConfig<Tour, TourBasicDto>
                 .NewConfig()
                 .Map(t => t.Id, src => src.Id)
-                .Map(t => t.DestinationId, src => src.DestinationId)
                 .Map(t => t.DestinationCountry, src => src.Destination.Country)
                 .Map(t => t.DestinationCity, src => src.Destination.City)
                 .Map(t => t.DestinationRegion, src => src.Destination.Region)

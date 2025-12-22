@@ -15,7 +15,8 @@ namespace SolutionReact.Server.Handlers.BookingParticipants
 
         public async Task<int> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var bookingParticipant = new BookingParticipant
+            var bookingParticipant = new BookingParticipant // musze tutaj tez uzyc request adapt jak w booking
+
             {
                 // how to do tis one correctly?
             };
