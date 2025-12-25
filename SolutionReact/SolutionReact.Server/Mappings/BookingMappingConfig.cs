@@ -24,18 +24,13 @@ namespace SolutionReact.Server.Mappings
 
             TypeAdapterConfig<CreateBookingCommand, Booking> // i should be also getting id of customers for booking participantS?
                .NewConfig()
-               .Map(t => t.CustomerId, src => src.CustomerId)
                .Map(t => t.CustomTourScheduleId, src => src.CustomTourScheduleId)
                .Map(t => t.NoPax, src => src.NoPax)
-                        .Map(dest => dest.BookingParticipants,
-                src => src.BookingParticipantIds.Select(id => new BookingParticipant
-                {
-                    CustomerId = id,
-                    IsActive = true,
-                    AddedBy = "user",
-                    AddedDate = DateTime.UtcNow
-                }).ToList()
-                );
+               .Map(t => t.BookingStatusId, src => 2) // default to 'Pending' status
+               .Map(t => t.IsActive, src => true)
+               .Map(t => t.AddedBy, src => "user")
+               .Map(t => t.AddedDate, src => DateTime.UtcNow);
+              
 
             TypeAdapterConfig<UpdateBookingCommand, Booking>
               .NewConfig()
