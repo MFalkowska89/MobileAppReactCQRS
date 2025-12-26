@@ -29,6 +29,7 @@ namespace SolutionReact.Server.Mappings
                .Map(t => t.BookingStatusId, src => 2) // default to 'Pending' status
                .Map(t => t.IsActive, src => true)
                .Map(t => t.AddedBy, src => "user")
+               .Map(t => t.CustomerId, src => 1)
                .Map(t => t.AddedDate, src => DateTime.UtcNow);
               
 

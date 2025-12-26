@@ -1,8 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SolutionReact.Server.Dto;
 using SolutionReact.Server.Requests.Customers.Commands;
-using SolutionReact.Server.Requests.Customers.Queries;
 
 namespace SolutionReact.Server.Controllers
 {
@@ -18,34 +16,26 @@ namespace SolutionReact.Server.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(typeof(CustomerDto), StatusCodes.Status200OK)]
+        [HttpPut("booking/{bookingId}")] // instead going to customer separately, i should be going by booking participant? // tutaj teoretrycznie moglabym tez pozwolic na dodwananie customers. - chociaz pewnie lepiej oddzielnie zeby nie miec problemu z id
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> Update(int bookingId, [FromBody] UpdateCustomerCommand command)
         {
-            var query = new GetCustomerByIdQuery(id);
-            var result = await _mediator.Send(query);
-
-            if (result == null)
+            if (bookingId != command.Id) 
             {
-                return NotFound(new { message = $"No customer found with ID {id}" });
+                return BadRequest(new { message = "ID w URL różni się od ID w body" });
             }
 
-            return Ok(result);
-        }
-
-        [HttpPost]
-        [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Create([FromBody] CreateCustomerCommand command)
-        {
-            var customerIds = await _mediator.Send(command);
-
-            return Ok(new
+            try
             {
-                ids = customerIds,
-                message = "Customers processed successfully"
-            });
+                await _mediator.Send(command);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
         }
-    }
+    } // czy powinnam miec customer i booking participant oddzielnie?
 }

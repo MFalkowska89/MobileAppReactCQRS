@@ -71,5 +71,23 @@ namespace SolutionReact.Server.Controllers
                 return NotFound(new { message = ex.Message });
             }
         }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var command = new DeleteBookingCommand(id);
+
+            try
+            {
+                await _mediator.Send(command);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
     } // czy powinnam miec customer i booking participant oddzielnie?
 }
