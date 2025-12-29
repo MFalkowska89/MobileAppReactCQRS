@@ -4,14 +4,14 @@ using SolutionReact.Server.Models;
 
 namespace SolutionReact.Server.Mappings
 {
-    public class BookingParticipantsMappingConfig
+    public class BookingParticipantMappingConfig
     {
         public static void Configure()
         {
             // ENTITY → DTO
-            TypeAdapterConfig<BookingParticipant, CustomerDto>
+            TypeAdapterConfig<BookingParticipant, BookingParticipantDto>
                 .NewConfig()
-                .Map(t => t.CustomerId, src => src.Id)
+                .Map(t => t.CustomerId, src => src.Customer.Id)
                 .Map(t => t.FirstName, src => src.Customer.FirstName)
                 .Map(t => t.LastName, src => src.Customer.LastName)
                 .Map(t => t.DateOfBirth, src => src.Customer.DateOfBirth)

@@ -16,17 +16,12 @@ namespace SolutionReact.Server.Controllers
             _mediator = mediator;
         }
 
-        [HttpPut("booking/{bookingId}")] // instead going to customer separately, i should be going by booking participant? // tutaj teoretrycznie moglabym tez pozwolic na dodwananie customers. - chociaz pewnie lepiej oddzielnie zeby nie miec problemu z id
+        [HttpPut] // instead going to customer separately, i should be going by booking participant? // tutaj teoretrycznie moglabym tez pozwolic na dodwananie customers. - chociaz pewnie lepiej oddzielnie zeby nie miec problemu z id
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Update(int bookingId, [FromBody] UpdateCustomerCommand command)
+        public async Task<IActionResult> Update(UpdateCustomerCommand command)
         {
-            if (bookingId != command.Id) 
-            {
-                return BadRequest(new { message = "ID w URL różni się od ID w body" });
-            }
-
             try
             {
                 await _mediator.Send(command);

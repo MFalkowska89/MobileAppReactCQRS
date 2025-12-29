@@ -20,6 +20,8 @@ namespace SolutionReact.Server.Handlers.TourSchedules
             var tourScheudles = await _context.ToursSchedule
                 .Where(ts => ts.TourId == request.TourId && ts.IsActive)
                 .Include(ts => ts.Tour)
+                .OrderBy(ts => ts.TourStartDate)
+                .ThenBy(ts => ts.AvailablePax)
                 .AsNoTracking()
                 .Select(ts => ts.Adapt<TourScheduleDto>())
                 .ToListAsync(cancellationToken);

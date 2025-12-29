@@ -19,16 +19,15 @@ namespace SolutionReact.Server.Handlers.Bookings
             var booking = await _context.Bookings
                 .FirstOrDefaultAsync(b => b.Id == request.Id && b.IsActive);
 
-            var status = await _context.StatusOfEntities
-                .Where(s => s.StatusName == "Cancelled").FirstAsync();
-
             if (booking == null)
             {
                 throw new KeyNotFoundException();
             }
 
             booking.IsActive = false;
-            booking.BookingStatusId = status.Id;
+            booking.DeletedDate = DateTime.UtcNow;
+            booking.DeletedBy = "user";
+            booking.BookingStatusId = 3;
 
             await _context.SaveChangesAsync(cancellationToken);
 

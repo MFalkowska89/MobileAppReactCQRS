@@ -23,7 +23,7 @@ namespace SolutionReact.Server.Mappings
                 .Map(t => t.MinParticipants, src => src.MinParticipants)
                 .Map(t => t.MaxParticipants, src => src.MaxParticipants)
                 .Map(t => t.TourCode, src => src.TourCode)
-                .Map(t => t.TourActivities, src => src.TourActivities);
+                .Map(t => t.TourActivities, src => src.TourActivities.Adapt<List<TourActivityDto>>());
         }
     }
 }

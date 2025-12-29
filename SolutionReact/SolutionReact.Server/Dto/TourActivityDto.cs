@@ -1,6 +1,6 @@
 ﻿namespace SolutionReact.Server.Dto
 {
-    public class ActivityDto
+    public class TourActivityDto
     {
         public int ActivityId { get; set; }
         public int? DayScheduled { get; set; }

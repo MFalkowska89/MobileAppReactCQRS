@@ -5,15 +5,14 @@ namespace SolutionReact.Server.Requests.Bookings.Commands
     public class CreateBookingCommand : IRequest<int>
     {
         public int CustomTourScheduleId { get; set; }
-        public int NoPax { get; set; }
-        public List<CreateCustomerRequest> Customers { get; set; }
+        public List<CreateCustomerRequest> Customers { get; set; } = new List<CreateCustomerRequest>();
     }
 
     public class CreateCustomerRequest
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
-        //public DateTime DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string HomeAddress { get; set; } = string.Empty;
         public string PostCode { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;

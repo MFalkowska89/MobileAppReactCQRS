@@ -1,6 +1,6 @@
 ﻿namespace SolutionReact.Server.Dto
 {
-    public class CustomerDto
+    public class BookingParticipantDto
     {
         public int CustomerId { get; set; }
         public string FirstName { get; set; } = string.Empty;

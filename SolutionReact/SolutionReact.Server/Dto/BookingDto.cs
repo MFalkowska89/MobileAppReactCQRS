@@ -3,6 +3,8 @@
     public class BookingDto // czy to moze byc tak czy powinnam miec oddzielna klase w ktorej to wszystko jest wrzucone? 
     {
         public int Id { get; set; }
+        public int TourId { get; set; }
+        public int TourScheduleId { get; set; }
         public DateTime TourStartDate { get; set; }
         public DateTime TourEndDate { get; set; }
         public string DestinationCountry { get; set; } = string.Empty;
@@ -12,6 +14,6 @@
         public int NoPax { get; set; }
         public decimal TotalPrice { get; set; }
         public DateTime BookingDate { get; set; }
-        public List<CustomerDto> BookingParticipants { get; set; } = new List<CustomerDto>();
+        public List<BookingParticipantDto> BookingParticipants { get; set; } = new List<BookingParticipantDto>();
     }
 }

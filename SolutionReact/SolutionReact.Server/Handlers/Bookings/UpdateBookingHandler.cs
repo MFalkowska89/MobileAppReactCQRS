@@ -25,7 +25,8 @@ namespace SolutionReact.Server.Handlers.Bookings
             }
 
             booking.CustomTourScheduleId = request.CustomTourScheduleId;
-            booking.NoPax = request.NoPax;
+            booking.ModifiedBy = "user";
+            booking.ModifiedDate = DateTime.UtcNow;
 
             await _context.SaveChangesAsync(cancellationToken);
 
