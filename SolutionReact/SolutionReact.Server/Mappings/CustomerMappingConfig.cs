@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using SolutionReact.Server.Dto;
 using SolutionReact.Server.Models;
+using SolutionReact.Server.Requests.BookingParticipants.Commands;
 using SolutionReact.Server.Requests.Bookings.Commands;
 
 namespace SolutionReact.Server.Mappings

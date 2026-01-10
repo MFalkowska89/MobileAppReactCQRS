@@ -18,8 +18,6 @@ namespace SolutionReact.Server.Controllers
             _mediator = mediator;
         }
 
-        // potrzebuje nastepujace: get booking by id, create booking, update booking, delete booking
-
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(BookingDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,12 +39,12 @@ namespace SolutionReact.Server.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Create([FromBody] CreateBookingCommand command)
         {
-            var unitId = await _mediator.Send(command);
+            var bookingId = await _mediator.Send(command);
 
             return CreatedAtAction(
                 nameof(GetById),
-                new { id = unitId },
-                new { id = unitId, message = "Jednostka miary została utworzona" }
+                new { id = bookingId },
+                new { id = bookingId, message = "Booking has been created" }
             );
         }
 
@@ -89,5 +87,5 @@ namespace SolutionReact.Server.Controllers
                 return NotFound(new { message = ex.Message });
             }
         }
-    } // czy powinnam miec customer i booking participant oddzielnie?
+    }
 }

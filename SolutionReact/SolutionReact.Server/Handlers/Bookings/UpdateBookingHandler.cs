@@ -16,6 +16,9 @@ namespace SolutionReact.Server.Handlers.Bookings
 
         public async Task<Unit> Handle(UpdateBookingCommand request, CancellationToken cancellationToken)
         {
+            // dodac waliacje 
+
+
             var booking = await _context.Bookings
                 .FirstOrDefaultAsync(b => b.Id == request.Id && b.IsActive);
 
@@ -24,9 +27,21 @@ namespace SolutionReact.Server.Handlers.Bookings
                 throw new KeyNotFoundException(nameof(booking));
             }
 
+            var currentSchedule = await _context.ToursSchedule
+                .FirstAsync(s => s.Id == booking.CustomTourScheduleId && s.IsActive);
+
+
+            // here it should be either first or default or earlier validation
+            var requestedSchedule = await _context.ToursSchedule
+                .FirstAsync(s => s.Id == request.CustomTourScheduleId && s.IsActive);
+
             booking.CustomTourScheduleId = request.CustomTourScheduleId;
             booking.ModifiedBy = "user";
             booking.ModifiedDate = DateTime.UtcNow;
+
+            currentSchedule.AvailablePax = currentSchedule.AvailablePax + booking.NoPax;
+
+            requestedSchedule.AvailablePax = requestedSchedule.AvailablePax - booking.NoPax;
 
             await _context.SaveChangesAsync(cancellationToken);
 

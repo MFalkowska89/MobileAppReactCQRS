@@ -11,6 +11,7 @@ namespace SolutionReact.Server.Mappings
             // ENTITY → DTO
             TypeAdapterConfig<BookingParticipant, BookingParticipantDto>
                 .NewConfig()
+                .Map(t => t.BookingParticipantId, src => src.Id)
                 .Map(t => t.CustomerId, src => src.Customer.Id)
                 .Map(t => t.FirstName, src => src.Customer.FirstName)
                 .Map(t => t.LastName, src => src.Customer.LastName)

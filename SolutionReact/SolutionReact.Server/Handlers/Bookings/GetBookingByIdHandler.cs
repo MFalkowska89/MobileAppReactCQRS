@@ -22,7 +22,7 @@ namespace SolutionReact.Server.Handlers.Customers
                 .Include(b => b.TourSchedule)
                     .ThenInclude(ts => ts.Tour)
                     .ThenInclude(t => t.Destination)
-                .Include(b => b.BookingParticipants)
+               .Include(b => b.BookingParticipants.Where(bp => bp.IsActive))
                     .ThenInclude(bp => bp.Customer)
                 .Include(b => b.StatusOfEntity)
                 .AsNoTracking()

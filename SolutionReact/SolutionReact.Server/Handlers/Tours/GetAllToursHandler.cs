@@ -22,7 +22,7 @@ namespace SolutionReact.Server.Handlers.Tours
         {
             var tours = await _context.Tours
                 .Where(t => t.IsActive)
-                .Include(t => t.Destination)
+                    .Include(t => t.Destination)
                 .OrderBy(t => t.Destination.Country)
                 .AsNoTracking()
                 .Select(t => t.Adapt<TourBasicDto>())

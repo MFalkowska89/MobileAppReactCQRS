@@ -21,8 +21,7 @@ namespace SolutionReact.Server.Mappings
                 .Map(t => t.DestinationCountry, src => src.TourSchedule.Tour.Destination.Country)
                 .Map(t => t.DestinationRegion, src => src.TourSchedule.Tour.Destination.Region)
                 .Map(t => t.BookingStatusName, src => src.StatusOfEntity.StatusName)
-                .Map(t => t.NoPax, src => src.NoPax)
-                .Map(t => t.TotalPrice, src => src.TotalPrice)
+                .Map(t => t.PricePerPerson, src => src.TourSchedule.Tour.Price)
                 .Map(t => t.BookingDate, src => src.BookingDate)
                 .Map(t => t.BookingParticipants, src => src.BookingParticipants.Adapt<List<BookingParticipantDto>>());
 

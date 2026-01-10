@@ -11,8 +11,7 @@
         public string DestinationCity { get; set; } = string.Empty;
         public string DestinationRegion { get; set; } = string.Empty;
         public string BookingStatusName { get; set; } = string.Empty;
-        public int NoPax { get; set; }
-        public decimal TotalPrice { get; set; }
+        public decimal PricePerPerson { get; set; } 
         public DateTime BookingDate { get; set; }
         public List<BookingParticipantDto> BookingParticipants { get; set; } = new List<BookingParticipantDto>();
     }

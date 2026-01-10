@@ -4,12 +4,7 @@ namespace SolutionReact.Server.Requests.Customers.Commands
 {
     public class UpdateCustomerCommand : IRequest<Unit>
     {
-        public List<CustomersToUpdate> CustomersToUpdate { get; set; } = new();
-    }
-
-    public class CustomersToUpdate
-    {
-        public int Id { get; set; }
+        public int CustomerId { get; set; }
         public string HomeAddress { get; set; } = string.Empty;
         public string PostCode { get; set; } = string.Empty;
         public string City { get; set; } = string.Empty;

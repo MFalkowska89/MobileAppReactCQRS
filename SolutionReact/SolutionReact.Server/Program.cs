@@ -1,5 +1,10 @@
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SolutionReact.Server.Behaviors;
 using SolutionReact.Server.Mappings;
+using SolutionReact.Server.Middleware;
 using SolutionReact.Server.Models;
 using System.Reflection;
 
@@ -29,7 +34,25 @@ namespace SolutionReact.Server
             BookingParticipantMappingConfig.Configure();
 
             // MediatR
-            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            builder.Services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
+
+            builder.Services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+                cfg.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            });
+
+
+
 
             // CORS - dla development zezwalaj na wszystkie polaczenia
             builder.Services.AddCors(options =>
@@ -58,6 +81,8 @@ namespace SolutionReact.Server
             var app = builder.Build();
 
             app.UseCors("AllowAll");
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
 
             // Automatyczne zastosowanie migracji przy starcie

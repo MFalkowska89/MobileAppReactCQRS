@@ -2,27 +2,26 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SolutionReact.Server.Models;
-using SolutionReact.Server.Requests.Bookings.Commands;
+using SolutionReact.Server.Requests.BookingParticipants.Commands;
 
-namespace SolutionReact.Server.Handlers.Bookings
+namespace SolutionReact.Server.Handlers.BookingParticipants
 {
-    public class CreateBookingHandler : IRequestHandler<CreateBookingCommand, int>
+    public class CreateBookingParticipantHandler : IRequestHandler<CreateBookingParticipantCommand, Unit>
     {
         private readonly ApplicationDbContext _context;
 
-        public CreateBookingHandler(ApplicationDbContext context)
+        public CreateBookingParticipantHandler(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public async Task<int> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateBookingParticipantCommand request, CancellationToken cancellationToken)
         {
-            //dodac walidacje
-
+            // dodac walidacje
 
             var customersList = new List<Customer>();
 
-            foreach (var customer in request.Customers)
+            foreach (var customer in request.ParticipantsToAdd)
             {
                 var existingCustomer = await _context.Customers
                     .FirstOrDefaultAsync(c => c.EmailAddress == customer.EmailAddress
@@ -55,34 +54,36 @@ namespace SolutionReact.Server.Handlers.Bookings
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            var booking = request.Adapt<Booking>();
+            var booking = await _context.Bookings
+                .FirstAsync(b => b.Id == request.BookingId, cancellationToken);
 
             var tourSchedule = await _context.ToursSchedule
-                .Where(testc => testc.Id == request.CustomTourScheduleId)
+                .Where(testc => testc.Id == booking.CustomTourScheduleId)
                 .Include(ts => ts.Tour)
                 .FirstAsync();
 
-            booking.CustomerId = customersList[0].Id;  
-            booking.NoPax = customersList.Count;
+            booking.NoPax = booking.NoPax + customersList.Count;
             booking.TotalPrice = tourSchedule.Tour.Price * booking.NoPax;
 
-            booking.BookingParticipants = customersList
-                .Select(c => new BookingParticipant
+            foreach (var bookingParticipant in customersList)
+            {
+                var newBookingParticipant = new BookingParticipant
                 {
-                    CustomerId = c.Id,
+                    BookingId = booking.Id,
+                    CustomerId = bookingParticipant.Id,
                     IsActive = true,
                     AddedBy = "user",
                     AddedDate = DateTime.UtcNow
-                })
-                .ToList();
+                };
 
-            _context.Bookings.Add(booking);
+                _context.BookingsParticipant.Add(newBookingParticipant);
+            }
 
-            tourSchedule.AvailablePax -= booking.NoPax;
+            tourSchedule.AvailablePax -= customersList.Count;
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return booking.Id;
+            return Unit.Value;
         }
     }
 }

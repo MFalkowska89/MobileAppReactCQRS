@@ -18,8 +18,8 @@ namespace SolutionReact.Server.Handlers.TourSchedules
         public async Task<List<TourScheduleDto>> Handle(GetTourSchedulesByTourIdQuery request, CancellationToken cancellationToken)
         {
             var tourScheudles = await _context.ToursSchedule
-                .Where(ts => ts.TourId == request.TourId && ts.IsActive)
-                .Include(ts => ts.Tour)
+                .Where(ts => ts.TourId == request.TourId && ts.IsActive && ts.TourStartDate > DateTime.UtcNow)
+                    .Include(ts => ts.Tour)
                 .OrderBy(ts => ts.TourStartDate)
                 .ThenBy(ts => ts.AvailablePax)
                 .AsNoTracking()

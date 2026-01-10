@@ -29,6 +29,22 @@ namespace SolutionReact.Server.Handlers.Bookings
             booking.DeletedBy = "user";
             booking.BookingStatusId = 3;
 
+            var bookingParticipants = await _context.BookingsParticipant
+                .Where(bp => bp.BookingId == booking.Id && bp.IsActive)
+                .ToListAsync();
+
+            foreach (var participant in bookingParticipants)
+            {
+                participant.IsActive = false;
+                participant.DeletedDate = DateTime.UtcNow;
+                participant.DeletedBy = "user";
+            }
+
+            var tourSchedule = await _context.ToursSchedule
+                .FirstAsync(ts => ts.Id == booking.CustomTourScheduleId);
+
+            tourSchedule.AvailablePax = tourSchedule.AvailablePax + bookingParticipants.Count;
+
             await _context.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
