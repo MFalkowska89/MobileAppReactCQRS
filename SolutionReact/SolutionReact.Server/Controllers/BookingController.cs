@@ -56,7 +56,7 @@ namespace SolutionReact.Server.Controllers
         {
             if (id != command.Id)
             {
-                return BadRequest(new { message = "ID w URL różni się od ID w body" });
+                return BadRequest(new { message = "ID in URL is different than in body" });
             }
 
             try

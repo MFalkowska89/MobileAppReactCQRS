@@ -1,19 +1,19 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SolutionReact.Server.Dto;
-using SolutionReact.Server.Requests.Tours.Commands;
-using SolutionReact.Server.Requests.Tours.Queries;
+using SolutionReact.Server.Requests.Activities.Commands;
+using SolutionReact.Server.Requests.Activities.Queries;
 
 namespace SolutionReact.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TourController : ControllerBase
+    public class ActivityController : ControllerBase
     {
 
         private readonly IMediator _mediator;
 
-        public TourController(IMediator mediator)
+        public ActivityController(IMediator mediator)
         {
             _mediator = mediator;
         }
@@ -21,22 +21,22 @@ namespace SolutionReact.Server.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var query = new GetAllToursQuery();
+            var query = new GetAllActivitiesQuery();
             var result = await _mediator.Send(query);
             return Ok(result);
         }
 
         [HttpGet("{id}")]
-        [ProducesResponseType(typeof(TourDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ActivityDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetById(int id)
         {
-            var query = new GetTourByIdQuery(id);
+            var query = new GetActivityByIdQuery(id);
             var result = await _mediator.Send(query);
 
             if (result == null)
             {
-                return NotFound(new { message = $"No tour found with ID {id}" });
+                return NotFound(new { message = $"No activity found with ID {id}" });
             }
 
             return Ok(result);
@@ -45,14 +45,14 @@ namespace SolutionReact.Server.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Create([FromBody] CreateTourCommand command)
+        public async Task<IActionResult> Create([FromBody] CreateActivityCommand command)
         {
-            var tourId = await _mediator.Send(command);
+            var activityId = await _mediator.Send(command);
 
             return CreatedAtAction(
                 nameof(GetById),
-                new { id = tourId },
-                new { id = tourId, message = "Tour has been created" }
+                new { id = activityId },
+                new { id = activityId, message = "Activity has been created" }
             );
         }
 
@@ -60,7 +60,7 @@ namespace SolutionReact.Server.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Update(int id, [FromBody] UpdateTourCommand command)
+        public async Task<IActionResult> Update(int id, [FromBody] UpdateActivityCommand command)
         {
             if (id != command.Id)
             {
@@ -83,7 +83,7 @@ namespace SolutionReact.Server.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
         {
-            var command = new DeleteTourCommand(id);
+            var command = new DeleteActivityCommand(id);
 
             try
             {

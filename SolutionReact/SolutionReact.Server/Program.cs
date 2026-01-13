@@ -32,6 +32,7 @@ namespace SolutionReact.Server
             CustomerMappingConfig.Configure();
             BookingMappingConfig.Configure();
             BookingParticipantMappingConfig.Configure();
+            ActivityMappingConfig.Configure();
 
             // MediatR
             //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

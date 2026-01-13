@@ -10,7 +10,6 @@ namespace SolutionReact.Server.Mappings
     {
         public static void Configure()
         {
-            //ENTITY → DTO
             TypeAdapterConfig<CreateCustomerRequest, Customer>
                 .NewConfig()
                 .Map(t => t.FirstName, src => src.FirstName)

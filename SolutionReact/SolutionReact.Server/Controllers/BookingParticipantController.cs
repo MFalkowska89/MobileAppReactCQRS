@@ -1,9 +1,6 @@
-﻿using Azure.Core;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using SolutionReact.Server.Dto;
 using SolutionReact.Server.Requests.BookingParticipants.Commands;
-using SolutionReact.Server.Requests.Bookings.Queries;
 
 namespace SolutionReact.Server.Controllers
 {
@@ -26,7 +23,7 @@ namespace SolutionReact.Server.Controllers
         {
             if (bookingId != command.BookingId)
                 return BadRequest("BookingId mismatch");
-             
+
             var unitId = await _mediator.Send(command);
 
             return NoContent();
@@ -49,5 +46,5 @@ namespace SolutionReact.Server.Controllers
                 return NotFound(new { message = ex.Message });
             }
         }
-    } // czy powinnam miec customer i booking participant oddzielnie?
+    }
 }

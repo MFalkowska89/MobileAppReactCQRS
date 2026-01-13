@@ -17,8 +17,6 @@ namespace SolutionReact.Server.Handlers.BookingParticipants
 
         public async Task<Unit> Handle(CreateBookingParticipantCommand request, CancellationToken cancellationToken)
         {
-            // dodac walidacje
-
             var customersList = new List<Customer>();
 
             foreach (var customer in request.ParticipantsToAdd)

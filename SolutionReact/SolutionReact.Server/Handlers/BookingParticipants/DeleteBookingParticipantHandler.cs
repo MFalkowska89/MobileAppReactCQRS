@@ -32,6 +32,11 @@ namespace SolutionReact.Server.Handlers.BookingParticipants
             var booking = await _context.Bookings
                 .FirstOrDefaultAsync(b => b.Id == bookingParticipant.BookingId);
 
+            if (booking == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
             var tourSchedule = await _context.ToursSchedule
                 .Include(t => t.Tour)
                 .FirstOrDefaultAsync(t => t.Id == bookingParticipant.Booking.CustomTourScheduleId);

@@ -17,9 +17,6 @@ namespace SolutionReact.Server.Handlers.Bookings
 
         public async Task<int> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
         {
-            //dodac walidacje
-
-
             var customersList = new List<Customer>();
 
             foreach (var customer in request.Customers)

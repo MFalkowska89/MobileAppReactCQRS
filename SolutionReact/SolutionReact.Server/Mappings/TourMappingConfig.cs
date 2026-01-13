@@ -1,6 +1,7 @@
 ﻿using Mapster;
 using SolutionReact.Server.Dto;
 using SolutionReact.Server.Models;
+using SolutionReact.Server.Requests.Tours.Commands;
 
 namespace SolutionReact.Server.Mappings
 {
@@ -8,7 +9,6 @@ namespace SolutionReact.Server.Mappings
     {
         public static void Configure()
         {
-            // ENTITY → DTO
             TypeAdapterConfig<Tour, TourDto>
                 .NewConfig()
                 .Map(t => t.Id, src => src.Id)
@@ -24,6 +24,22 @@ namespace SolutionReact.Server.Mappings
                 .Map(t => t.MaxParticipants, src => src.MaxParticipants)
                 .Map(t => t.TourCode, src => src.TourCode)
                 .Map(t => t.TourActivities, src => src.TourActivities.Adapt<List<TourActivityDto>>());
+
+            TypeAdapterConfig<CreateTourCommand, Tour>
+               .NewConfig()
+               .Map(t => t.DestinationId, src => src.DestinationId)
+               .Map(t => t.LengthInDays, src => src.LengthInDays)
+               .Map(t => t.TourName, src => src.TourName)
+               .Map(t => t.Description, src => src.Description)
+               .Map(t => t.Price, src => src.Price)
+               .Map(t => t.FotoURL, src => src.FotoURL)
+               .Map(t => t.MinParticipants, src => src.MinParticipants)
+               .Map(t => t.MaxParticipants, src => src.MaxParticipants)
+               .Map(t => t.Comments, src => src.Comments)
+               .Map(t => t.TourCode, src => src.TourCode)
+               .Map(t => t.IsActive, src => true)
+               .Map(t => t.AddedBy, src => "user")
+               .Map(t => t.AddedDate, src => DateTime.UtcNow);
         }
     }
 }

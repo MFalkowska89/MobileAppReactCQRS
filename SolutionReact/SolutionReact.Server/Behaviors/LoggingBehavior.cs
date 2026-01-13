@@ -23,12 +23,10 @@ namespace SolutionReact.Server.Behaviors
             var requestName = typeof(TRequest).Name;
             var requestId = Guid.NewGuid().ToString("N")[..8];
 
-            // Logowanie wejścia
             _logger.LogInformation(
                 "[{RequestId}] ➡️ START {RequestName}",
                 requestId, requestName);
 
-            // W trybie Debug - loguj pełny obiekt
             if (_logger.IsEnabled(LogLevel.Debug))
             {
                 try
@@ -46,7 +44,6 @@ namespace SolutionReact.Server.Behaviors
                 }
             }
 
-            // Zmierz czas wykonania
             var stopwatch = Stopwatch.StartNew();
 
             try
@@ -55,7 +52,6 @@ namespace SolutionReact.Server.Behaviors
 
                 stopwatch.Stop();
 
-                // Logowanie sukcesu
                 _logger.LogInformation(
                     "[{RequestId}] ✅ END {RequestName} ({ElapsedMs}ms)",
                     requestId, requestName, stopwatch.ElapsedMilliseconds);
@@ -74,7 +70,6 @@ namespace SolutionReact.Server.Behaviors
             {
                 stopwatch.Stop();
 
-                // Logowanie błędu
                 _logger.LogError(
                     ex,
                     "[{RequestId}] ❌ FAIL {RequestName} ({ElapsedMs}ms) - {ErrorMessage}",

@@ -8,7 +8,6 @@ namespace SolutionReact.Server.Mappings
     {
         public static void Configure()
         {
-            // ENTITY → DTO
             TypeAdapterConfig<BookingParticipant, BookingParticipantDto>
                 .NewConfig()
                 .Map(t => t.BookingParticipantId, src => src.Id)

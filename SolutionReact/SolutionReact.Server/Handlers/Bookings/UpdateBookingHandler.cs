@@ -16,9 +16,6 @@ namespace SolutionReact.Server.Handlers.Bookings
 
         public async Task<Unit> Handle(UpdateBookingCommand request, CancellationToken cancellationToken)
         {
-            // dodac waliacje 
-
-
             var booking = await _context.Bookings
                 .FirstOrDefaultAsync(b => b.Id == request.Id && b.IsActive);
 
@@ -30,8 +27,6 @@ namespace SolutionReact.Server.Handlers.Bookings
             var currentSchedule = await _context.ToursSchedule
                 .FirstAsync(s => s.Id == booking.CustomTourScheduleId && s.IsActive);
 
-
-            // here it should be either first or default or earlier validation
             var requestedSchedule = await _context.ToursSchedule
                 .FirstAsync(s => s.Id == request.CustomTourScheduleId && s.IsActive);
 

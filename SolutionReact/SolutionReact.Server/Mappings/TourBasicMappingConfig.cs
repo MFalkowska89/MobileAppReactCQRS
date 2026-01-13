@@ -8,7 +8,6 @@ namespace SolutionReact.Server.Mappings
     {
         public static void Configure()
         {
-            // ENTITY → DTO
             TypeAdapterConfig<Tour, TourBasicDto>
                 .NewConfig()
                 .Map(t => t.Id, src => src.Id)

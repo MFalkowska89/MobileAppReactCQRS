@@ -14,10 +14,8 @@ namespace SolutionReact.Server.Handlers.BookingParticipants
             _context = context;
         }
 
-        public async Task<Unit> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken) // chyba do tego noe jest mi potrzebne booking, moge wyslac liste samych customers?
+        public async Task<Unit> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
-            // dodac walidacje
-
             var existingCustomer = await _context.Customers
                 .FirstOrDefaultAsync(c => c.Id == request.CustomerId && c.IsActive);
 

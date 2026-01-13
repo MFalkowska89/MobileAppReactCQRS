@@ -23,7 +23,6 @@ namespace SolutionReact.Server.Behaviors
             RequestHandlerDelegate<TResponse> next,
             CancellationToken cancellationToken)
         {
-            // Jeśli nie ma walidatorów - przejdź dalej
             if (!_validators.Any())
             {
                 return await next();
@@ -32,21 +31,17 @@ namespace SolutionReact.Server.Behaviors
             var requestName = typeof(TRequest).Name;
             _logger.LogDebug("Walidacja {RequestName}", requestName);
 
-            // Utwórz kontekst walidacji
             var context = new ValidationContext<TRequest>(request);
 
-            // Wykonaj wszystkie walidatory
             var validationResults = await Task.WhenAll(
                 _validators.Select(v => v.ValidateAsync(context, cancellationToken))
             );
 
-            // Zbierz błędy
             var failures = validationResults
                 .Where(r => r.Errors.Any())
                 .SelectMany(r => r.Errors)
                 .ToList();
 
-            // Jeśli są błędy - rzuć wyjątek
             if (failures.Any())
             {
                 _logger.LogWarning(
@@ -60,7 +55,6 @@ namespace SolutionReact.Server.Behaviors
 
             _logger.LogDebug("Walidacja {RequestName} zakończona sukcesem", requestName);
 
-            // Walidacja OK - przejdź do Handlera
             return await next();
         }
     }

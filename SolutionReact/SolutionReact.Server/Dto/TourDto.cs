@@ -2,7 +2,7 @@
 
 namespace SolutionReact.Server.Dto
 {
-    public class TourDto // only tour for the customer dto
+    public class TourDto
     {
         public int Id { get; set; }
         public string DestinationCountry { get; set; } = string.Empty;
